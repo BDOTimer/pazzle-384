@@ -11,11 +11,15 @@
 #include <iterator>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
+#include <memory>
 #include <format>  /// C++20
 #include <vector>
 #include <string>
+#include <cmath>
 #include <map>
 #include <set>
+
 
 namespace fs = std::filesystem;
 

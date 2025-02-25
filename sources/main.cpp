@@ -3,11 +3,6 @@
 /// ...
 /// отключить консольное окно: -mwindows
 ///----------------------------------------------------------------------------:
-#include <iostream>
-#include <string>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include <memory>
 
 #include "files-cargo.h"
 #include "images.h"
