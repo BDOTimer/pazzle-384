@@ -68,7 +68,7 @@ struct  _2Sides
         {
             int N1 = int(ai->r) - bi->r; N1 *= N1;
             int N2 = int(ai->b) - bi->b; N2 *= N2;
-            int N3 = int(ai->g) - bi->g; N2 *= N2;
+            int N3 = int(ai->g) - bi->g; N3 *= N3;
 
             SS += N1 + N2 + N3;
         }
