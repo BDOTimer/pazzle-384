@@ -28,7 +28,7 @@ struct  _2Sides
     ///--------------------------------------|
     /// Общие оценки для 4 пар сторон.       |
     ///--------------------------------------:
-    std::array<int, 4> similarity;
+    std::array<int64_t, 4> similarity;
 
     ///--------------------------------------|
     /// Для пары картинок -> 4 пары сторон.  |
@@ -55,12 +55,12 @@ struct  _2Sides
     ///--------------------------------------|
     /// Вычислям оценку по пикселям...       |
     ///--------------------------------------:
-    int doSimilarity(const unsigned cnt)
+    int64_t doSimilarity(const unsigned cnt)
     {
         const Mat2dPixel& matA = a->get(E[cnt][0]);
         const Mat2dPixel& matB = b->get(E[cnt][1]);
 
-        int SS{};
+        int64_t SS{};
 
         for(auto ai  = matA[0].begin(),
                  bi  = matB[0].begin();
