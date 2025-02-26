@@ -5,39 +5,12 @@
 /// Файловый коллектор.
 ///     -   как испльзовать смотрим тест.
 ///----------------------------------------------------------------------------:
-#include <filesystem> /// C++17
-#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <memory>
-#include <format>  /// C++20
-#include <vector>
-#include <string>
-#include <cmath>
-#include <map>
-#include <set>
+#include "debug.h"
 
-
-namespace fs = std::filesystem;
-
-#define ln(a) std::cout << #a << ":\n" << (a) << '\n';
-#define  l(a) std::cout << #a << ": "  << (a) << '\n';
-#define TEST friend void tests  (); static void test()
-
-#define ASSERT(a) if(!(a)) \
-{   std::cout << "ASSERT_ERROR: " \
-              << "FILE: \"" << cutStr(__FILE__)  << "\", " \
-              << "LINE: "   << __LINE__ \
-              << "\n"; throw(-1); }
-
-inline std::string_view cutStr(std::string_view s)
-{   auto p = s.rfind("sources"); return s.substr(p, s.size() - p);
+namespace win
+{
+    #include <windows.h>
 }
-
-#define TRY(a) try{a;}catch(...){std::cout << "ERROR exeption: " << #a << '\n';}
 
 ///----------------------------------------------------------------------------|
 /// Внимание!
@@ -47,6 +20,8 @@ struct  Config
 {       Config()
         {   std::system("chcp 65001>nul");
             std::cout << std::format(BORDER, VERSION) << '\n';
+
+            win::SetConsoleTitle ("Debug view: Pazzle384");
         }
         Config          (const Config&) = delete;
         Config operator=(const Config&) = delete;
@@ -54,7 +29,7 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.3"};
+    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4"};
     inline static constexpr char BORDER []{R"(
 ///--------------------------------------|
 ///      {}       |
@@ -69,7 +44,8 @@ struct  Config
     ///--------------------------------------|
     /// Базовая директория поиска.           |
     ///--------------------------------------:
-    const std::string_view dirSource{"./images/"};
+/// const std::string_view dirSource{"./images/" };
+    const std::string_view dirSource{"./genTest/"};
 
     ///--------------------------------------|
     /// Глубина вложенности папок для поиска.|

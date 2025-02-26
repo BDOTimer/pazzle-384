@@ -25,10 +25,26 @@ struct  _2Sides
     TaskImage const* a;
     TaskImage const* b;
 
+    using TE = TaskImage::eSIDES;
+
     ///--------------------------------------|
     /// Общие оценки для 4 пар сторон.       |
+    ///     0, 1 для UP    и DOWN            |
+    ///     2, 3 для RIGHT и LEFT            |
     ///--------------------------------------:
-    std::array<int64_t, 4> similarity;
+    std::array<float, 4> similarity;
+
+    ///--------------------------------------|
+    /// Правила коннекта - "кто с кем?".     |
+    ///     первая колонка для а             |
+    ///     вторая колонка для b             |
+    ///--------------------------------------:
+    inline static    TE  R[4][2]
+    {   { TE::UP   , TE::DOWN  },
+        { TE::DOWN , TE::UP    },
+        { TE::RIGHT, TE::LEFT  },
+        { TE::LEFT , TE::RIGHT }
+    };
 
     ///--------------------------------------|
     /// Для пары картинок -> 4 пары сторон.  |
@@ -40,35 +56,23 @@ struct  _2Sides
         }
     }
 
-    using TE = TaskImage::eSIDES;
-
-    ///--------------------------------------|
-    /// Правила коннекта - "кто с кем?".     |
-    ///--------------------------------------:
-    inline static    TE  E[4][2]
-    {   { TE::UP   , TE::DOWN  },
-        { TE::DOWN , TE::UP    },
-        { TE::RIGHT, TE::LEFT  },
-        { TE::LEFT , TE::RIGHT }
-    };
-
     ///--------------------------------------|
     /// Вычислям оценку по пикселям...       |
     ///--------------------------------------:
-    int64_t doSimilarity(const unsigned cnt)
+    float  doSimilarity(const unsigned cnt)
     {
-        const Mat2dPixel& matA = a->get(E[cnt][0]);
-        const Mat2dPixel& matB = b->get(E[cnt][1]);
+        const Mat2dPixel& matA = a->get(R[cnt][0]);
+        const Mat2dPixel& matB = b->get(R[cnt][1]);
 
-        int64_t SS{};
+        unsigned SS{};
 
         for(auto ai  = matA[0].begin(),
                  bi  = matB[0].begin();
-                 ai != matA[0].end(); ++ai, ++bi)
+                 ai != matA[0].end  (); ++ai, ++bi)
         {
             int N1 = int(ai->r) - bi->r; N1 *= N1;
-            int N2 = int(ai->b) - bi->b; N2 *= N2;
-            int N3 = int(ai->g) - bi->g; N3 *= N3;
+            int N2 = int(ai->b) - bi->g; N2 *= N2;
+            int N3 = int(ai->g) - bi->b; N3 *= N3;
 
             SS += N1 + N2 + N3;
         }
@@ -86,10 +90,11 @@ struct  _2Sides
 
         unsigned cnt{};
         for(const auto similar : similarity)
-        {   std::cout << std::format("[{}, {}]: ",
-                                    TaskImage::whatSIDE(E[cnt][0]),
-                                    TaskImage::whatSIDE(E[cnt][1])); ++cnt;
-                     l(similar);
+        {   std::cout << std::format("[{}, {}]: Similar: {}\n",
+                              TaskImage::whatSIDE(R[cnt][0])  ,
+                              TaskImage::whatSIDE(R[cnt][1])  ,
+                              similar);
+          ++cnt;
         }
 
         return "";
@@ -105,7 +110,12 @@ struct  Task384 : std::vector<TaskImage const*>
         {   reserve(imgs.size());
             for(const auto& e : imgs) push_back(&e);
             m.reserve(calcElem(size()));
+
             go();
+
+            conv2persent();
+
+            ln(back()->getSize())
         }
 
     ///--------------------------------------|
@@ -118,10 +128,10 @@ struct  Task384 : std::vector<TaskImage const*>
             {
                 m.push_back(_2Sides(*a, *b));
 
-                ASSERT((*a)->filename != (*b)->filename)
+            /// ASSERT((*a)->filename != (*b)->filename)
             }
         }
-            ASSERT(calcElem(384) == m.size())
+        ASSERT(calcElem(size()) == m.size())
     }
 
 private:
@@ -136,6 +146,34 @@ private:
     static unsigned calcElem(unsigned n){ return n * (n - 1) / 2; }
 
     ///--------------------------------------|
+    /// unsigned ---> max: 4294967296        |
+    /// хватит на картинку с сайзом:         |
+    /// l(4294967296 / (255 * 255 * 3)) ==   |
+    ///                                22017 |
+    ///--------------------------------------:
+    static unsigned calcMaxSimilar(const unsigned sizePixels)
+    {   return 255 * 255 * 3 * sizePixels;
+    }
+
+    ///--------------------------------------|
+    /// Конверт оценок в проценты.           |
+    ///--------------------------------------:
+    void conv2persent()
+    {
+        const unsigned maxx = calcMaxSimilar(front()->getSize().x);
+        const unsigned maxy = calcMaxSimilar(front()->getSize().y);
+
+        for(auto& _2s : m)
+        {
+    _2s.similarity[0] = float(unsigned(10000 * ((maxx - _2s.similarity[0]) / maxx)))/100;
+    _2s.similarity[1] = float(unsigned(10000 * ((maxx - _2s.similarity[1]) / maxx)))/100;
+
+    _2s.similarity[2] = float(unsigned(10000 * ((maxy - _2s.similarity[2]) / maxy)))/100;
+    _2s.similarity[3] = float(unsigned(10000 * ((maxy - _2s.similarity[3]) / maxy)))/100;
+        }
+    }
+
+    ///--------------------------------------|
     /// Тест разраба.                        |
     ///--------------------------------------:
     TEST
@@ -146,7 +184,7 @@ private:
         _2Sides _2sides(task384[0], task384[1]);
                 _2sides.debug();
 */
-        l(calcElem(384) == task384.m.size())
+        l(calcElem(images.size()) == task384.m.size())
 
         unsigned cnt{};
 
@@ -155,7 +193,7 @@ private:
             std::cout << "\n///-------------------------------:"; l(cnt)
             e.debug();
 
-            if(++cnt == 4) break;
+            if(++cnt == 20) break;
         }
 
         std::cout << "\n...\n\nВсего таких пар: " << task384.m.size() << '\n';

@@ -7,6 +7,7 @@
 #include "files-cargo.h"
 #include "images.h"
 #include "task384.h"
+#include "gen-img.h"
 
 ///---------------------------------|
 /// Это прототип ресурса.           |
@@ -96,7 +97,7 @@ struct  Render
                 }
             }
 
-            window.clear   ();
+            window.clear   ({0, 20, 40});
 
             ///----------------------|
             /// cam_world.           |
@@ -118,6 +119,13 @@ struct  Render
 
 void tests()
 {
+    ///---------------------------|
+    /// Тузлы.                    |
+    ///---------------------------:
+    if(bool on = true; on)
+    {   tools::GeneratorImages::test();
+    }
+
 /// myl::testfoo_getVSizeWH();
 /// CastomFilesCargo ::test();
 /// HeroTest         ::test();
@@ -127,9 +135,11 @@ void tests()
 /// DrawImage        ::test();
     Task384          ::test();
 
+    ///---------------------------|
+    /// Основной рендер.          |
+    ///---------------------------:
     std::unique_ptr<Render> run(new Render);
 }
-
 
 ///----------------------------------------------------------------------------|
 /// Start.
