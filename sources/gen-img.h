@@ -60,6 +60,8 @@ namespace tools
     {       GeneratorImages(const ConfigGI& _cfg) : cfg(_cfg)
             {   gen();
                 countSave = save2file();
+
+                WARNING(countSave != size(), "")
             }
 
         unsigned countSave{};

@@ -136,7 +136,7 @@ private:
     ///--------------------------------------:
     std::array<Mat2dPixel, 4>         _4Sides;
 
-    inline static unsigned width{2};
+    inline static unsigned           width{2};
 
     ///--------------------------------------|
     /// Берём пиксели с пазла и укладываем.  |

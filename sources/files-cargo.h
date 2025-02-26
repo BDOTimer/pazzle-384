@@ -12,7 +12,8 @@ namespace win
     #if __has_include(<windows.h>)
         #include <windows.h>
         void init()
-        {   win::SetConsoleTitle ("Debug view: Pazzle384");
+        {   std::system("chcp 65001>nul");
+            win::SetConsoleTitle ("Debug view: Pazzle384");
             std::system("mode 50,40");
         }
     #else
@@ -26,7 +27,7 @@ namespace win
 ///--------------------------------------------------------------------- Config:
 struct  Config
 {       Config()
-        {   std::system("chcp 65001>nul");
+        {
             win::init();
 
             std::cout << bannerlogo();

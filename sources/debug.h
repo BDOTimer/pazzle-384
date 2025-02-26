@@ -47,8 +47,8 @@ struct  Ass
         }
     }
 
-    static void warn(bool pred, Strv filename, int line, Strv str)
-    {   if(!pred)
+    static void warn(bool b, Strv filename, int line, Strv str)
+    {   if(b)
         {   std::cout << std::format(WARNING, cutStr(filename), line, str);
         }
     }
