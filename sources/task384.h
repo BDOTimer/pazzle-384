@@ -57,7 +57,7 @@ struct  _2Sides
     }
 
     ///--------------------------------------|
-    /// Вычислям оценку по пикселям...       |
+    /// Вычисляем оценку по пикселям...      |
     ///--------------------------------------:
     float  doSimilarity(const unsigned cnt)
     {
@@ -90,7 +90,7 @@ struct  _2Sides
 
         unsigned cnt{};
         for(const auto similar : similarity)
-        {   std::cout << std::format("[{}, {}]: Similar: {}\n",
+        {   std::cout << std::format("[{}, {}]: Similar: {} %\n",
                               TaskImage::whatSIDE(R[cnt][0])  ,
                               TaskImage::whatSIDE(R[cnt][1])  ,
                               similar);
@@ -113,8 +113,6 @@ struct  Task384 : std::vector<TaskImage const*>
 
             go();
 
-            conv2persent();
-
             ln(back()->getSize())
         }
 
@@ -132,6 +130,8 @@ struct  Task384 : std::vector<TaskImage const*>
             }
         }
         ASSERT(calcElem(size()) == m.size())
+
+        conv2persent();
     }
 
 private:

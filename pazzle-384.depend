@@ -446,11 +446,11 @@
 	<SFML/Graphics.hpp>
 	"files-cargo.h"
 
-1740556445 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
+1740579716 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
-	"genImg.h"
+	"gen-img.h"
 
 1731146446 c:\!cb-2025\sfml-2.6.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -902,11 +902,16 @@
 	<map>
 	<set>
 
-1740578327 c:\!cb-2025\projects\cforum\pazzle-384\sources\task384.h
+1740583677 c:\!cb-2025\projects\cforum\pazzle-384\sources\task384.h
 	<SFML/Graphics.hpp>
 	"images.h"
 
 1740579169 c:\!cb-2025\projects\cforum\pazzle-384\sources\genimg.h
+	<cmath>
+	<SFML/Graphics.hpp>
+	"debug.h"
+
+1740579716 c:\!cb-2025\projects\cforum\pazzle-384\sources\gen-img.h
 	<cmath>
 	<SFML/Graphics.hpp>
 	"debug.h"
