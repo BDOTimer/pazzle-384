@@ -11,7 +11,7 @@
 #include "files-cargo.h"
 
 template<typename T>
-inline std::ostream& operator<<(std::ostream& o, const sf::Vector2<T>& e)
+inline std::ostream& operator<<(std::ostream& o, const sf::Vector2<T> e)
 {   o << std::format("    WH: [{}, {}]\n", e.x, e.y);
     return o;
 }
@@ -358,7 +358,7 @@ private:
     ///--------------------------------------|
     /// Расстановка спрайтов на экране.      |
     ///--------------------------------------:
-    void init(const sf::Vector2u& sz)
+    void init(const sf::Vector2u sz)
     {
         if(images.empty()) return;
 
