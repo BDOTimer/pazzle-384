@@ -22,22 +22,33 @@
 namespace fs = std::filesystem;
 void tests();
 
+template<typename T> using Arr1d =       std::vector<T> ;
+template<typename T> using Mat2d = Arr1d<std::vector<T>>;
+template<typename T> using Mat3d = Mat2d<std::vector<T>>;
+
 #define ln(a) std::cout << #a << ":\n" << (a) << '\n';
 #define  l(a) std::cout << #a << ": "  << (a) << '\n';
 #define TEST friend void ::tests(); static void test()
 
-#define ASSERT(a) if(!(a)) \
-{   std::cout << "ASSERT_ERROR: " \
-              << "FILE: \"" << cutStr(__FILE__)  << "\", " \
-              << "LINE: "   << __LINE__ \
-              << "\n"; throw(-1); }
+using Strv = std::string_view;
 
-inline std::string_view cutStr(std::string_view s)
-{   auto p = s.rfind("sources"); return s.substr(p, s.size() - p);
-}
+struct  Ass
+{       Ass(bool pred, Strv filename, int line, Strv s = "")
+        {   if(!pred)
+            {   std::cout
+                    << std::format("ASSERT_ERROR: FILE: \"{}\", LINE: {}, {}\n",
+                            cutStr(filename), line, s);
+                throw(-1);
+            }
+        }
 
+    Strv cutStr(Strv s) const
+    {   auto p = s.rfind("sources"); return s.substr(p, s.size() - p);
+    }
+};
+
+#define  ASSERT(a)       Ass(a, __FILE__, __LINE__);
+#define ASSERTM(a, mess) Ass(a, __FILE__, __LINE__, mess);
 #define TRY(a) try{a;}catch(...){std::cout << "ERROR exeption: " << #a << '\n';}
-
-
 
 #endif // DEBUG_H

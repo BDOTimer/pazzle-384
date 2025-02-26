@@ -99,7 +99,7 @@ struct  myImage : sf::Image
     }
 };
 
-using Mat2dPixel = std::vector<std::vector<sf::Color>>;
+using Mat2dPixel = Mat2d<sf::Color>;
 
 ///-----------------------------------------------------------------------------
 /// Прототип класса для задачи.

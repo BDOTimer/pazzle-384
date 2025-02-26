@@ -122,7 +122,7 @@ void tests()
     ///---------------------------|
     /// Тузлы.                    |
     ///---------------------------:
-    if(bool on = true; on)
+    if(bool on = false; on)
     {   tools::GeneratorImages::test();
     }
 
@@ -133,7 +133,7 @@ void tests()
 /// TaskImage ::test_4Sides();
 /// LoaderImages     ::test();
 /// DrawImage        ::test();
-    Task384          ::test();
+/// Task384          ::test();
 
     ///---------------------------|
     /// Основной рендер.          |

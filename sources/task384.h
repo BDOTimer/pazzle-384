@@ -113,7 +113,7 @@ struct  Task384 : std::vector<TaskImage const*>
 
             go();
 
-            ln(back()->getSize())
+            ln(front()->getSize())
         }
 
     ///--------------------------------------|
