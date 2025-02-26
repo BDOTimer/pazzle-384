@@ -19,6 +19,8 @@
 #include <map>
 #include <set>
 
+#include <SFML/Graphics.hpp>
+
 namespace fs = std::filesystem;
 void tests();
 

@@ -114,6 +114,10 @@ struct  Task384 : std::vector<TaskImage const*>
             go();
 
             ln(front()->getSize())
+
+            auto result = std::format("Всего расчитанны оценки для {} пар.\n"
+                                     , m.size());
+            ln(result)
         }
 
     ///--------------------------------------|

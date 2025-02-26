@@ -446,7 +446,7 @@
 	<SFML/Graphics.hpp>
 	"files-cargo.h"
 
-1740584059 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
+1740609444 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
@@ -870,14 +870,12 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1740592609 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
-	"debug.h"
-	<windows.h>
+1740610594 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
+	"myl.h"
 
-1740589499 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
+1740609074 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
 	<cmath>
 	<iomanip>
-	<SFML/Graphics.hpp>
 	"files-cargo.h"
 
 1740503931 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task384.h
@@ -886,7 +884,7 @@
 	<SFML/Graphics.hpp>
 	"images.h"
 
-1740591145 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
+1740609040 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
 	<filesystem>
 	<algorithm>
 	<iostream>
@@ -901,8 +899,9 @@
 	<cmath>
 	<map>
 	<set>
+	<SFML/Graphics.hpp>
 
-1740583955 c:\!cb-2025\projects\cforum\pazzle-384\sources\task384.h
+1740605720 c:\!cb-2025\projects\cforum\pazzle-384\sources\task384.h
 	<SFML/Graphics.hpp>
 	"images.h"
 
@@ -911,8 +910,14 @@
 	<SFML/Graphics.hpp>
 	"debug.h"
 
-1740579716 c:\!cb-2025\projects\cforum\pazzle-384\sources\gen-img.h
-	<cmath>
-	<SFML/Graphics.hpp>
+1740610543 c:\!cb-2025\projects\cforum\pazzle-384\sources\gen-img.h
+	"myl.h"
+
+1740609762 c:\!cb-2025\projects\cforum\pazzle-384\sources\myl.h
 	"debug.h"
+	"config.h"
+
+1740610703 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
+	"debug.h"
+	<windows.h>
 

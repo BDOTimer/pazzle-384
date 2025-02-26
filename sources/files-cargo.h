@@ -5,66 +5,7 @@
 /// Файловый коллектор.
 ///     -   как испльзовать смотрим тест.
 ///----------------------------------------------------------------------------:
-#include "debug.h"
-
-namespace win
-{
-    #if __has_include(<windows.h>)
-        #include <windows.h>
-        void init()
-        {   std::system("chcp 65001>nul");
-            win::SetConsoleTitle ("Debug view: Pazzle384");
-            std::system("mode 50,40");
-        }
-    #else
-        void init(){}
-    #endif
-}
-
-///----------------------------------------------------------------------------|
-/// Внимание!
-/// Настройте конфиг согласно вашим хотелкам, разумеется, адекватным.
-///--------------------------------------------------------------------- Config:
-struct  Config
-{       Config()
-        {
-            win::init();
-
-            std::cout << bannerlogo();
-        }
-        Config          (const Config&) = delete;
-        Config operator=(const Config&) = delete;
-
-    ///--------------------------------------|
-    /// Уважайте ваш код! :)                 |
-    ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4"};
-    inline static std::string bannerlogo()
-    {   Strv a{"///--------------------------------------|"};
-        return std::format("{}\n///      {}       |\n{}\n", a,VERSION,a);
-    }
-
-    ///--------------------------------------|
-    /// Фильтр поиска по расширению файлов.  |
-    ///--------------------------------------:
-    const std::set<std::string_view> filtr{".jpg",".png"};
-
-    ///--------------------------------------|
-    /// Базовая директория поиска.           |
-    ///--------------------------------------:
-    const std::string_view dirSource{"./images/" };
-/// const std::string_view dirSource{"./genTest/"};
-
-    ///--------------------------------------|
-    /// Глубина вложенности папок для поиска.|
-    ///--------------------------------------:
-    int  depth{1};
-
-    ///--------------------------------------|
-    /// Получить существующий объект.        |
-    ///--------------------------------------:
-    static const Config& get(){ static const Config cfg; return cfg; }
-};
+#include "myl.h"
 
 using MapPath = std::map<std::string, std::vector<fs::path>>;
 
@@ -161,7 +102,7 @@ private:
     {
         const auto& spd = fs::directory_options::skip_permission_denied;
 
-        const fs::recursive_directory_iterator START(cfg.dirSource, spd);
+        const fs::recursive_directory_iterator START(cfg.getDirImg(), spd);
         const fs::recursive_directory_iterator END  {};
 
         for (auto ifile  = START; ifile != END; ++ifile)

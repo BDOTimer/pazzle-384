@@ -4,10 +4,7 @@
 ///-----------------------------------------------------------------------------
 /// Генератор простых картинок(для настройки глаза Саурона).
 ///----------------------------------------------------------------------------:
-#include <cmath>
-#include <SFML/Graphics.hpp>
-
-#include "debug.h"
+#include "myl.h"
 
 namespace tools
 {
@@ -36,15 +33,13 @@ namespace tools
             {   {   0,   0,   0 },
                 { 255, 255, 255 }
             },
-            {   { 255,   0,   0 },
+            {   {   0, 255,   0 },
                 {   0, 255,   0 }
             },
             {   { 255, 255, 255 },
                 {   0, 255,   0 }
             }
         };
-
-        std::string dir{"./genTest/"};
 
         static     const ConfigGI& get()
         {   static const ConfigGI  cfg;
@@ -87,8 +82,9 @@ namespace tools
         }
 
         std::string getName(const unsigned n) const
-        {                    std::string     a{std::to_string(n)};
-            return cfg.dir + std::string(4 - a.size(), '0') + a + ".png";
+        {   const std::string dir{Config::get().dirImg[1]};
+                         std::string     a{std::to_string(n)};
+            return dir + std::string(4 - a.size(), '0') + a + ".png";
         }
 
         TEST

@@ -7,68 +7,7 @@
 #include <cmath>
 #include <iomanip>
 
-#include <SFML/Graphics.hpp>
 #include "files-cargo.h"
-
-template<typename T>
-inline std::ostream& operator<<(std::ostream& o, const sf::Vector2<T> e)
-{   o << std::format("    WH: [{}, {}]\n", e.x, e.y);
-    return o;
-}
-
-template<typename T>
-inline std::ostream& operator<<(std::ostream& o, const std::vector<T>& m)
-{   for(const auto& e : m) o << e;
-    return o;
-}
-
-namespace myl
-{
-    ///--------------------------------------|
-    /// Карманный рендер, чтобы увидеть obj. |
-    ///--------------------------------------:
-    #define SHOW(a) myl::show(a, #a)
-
-    template<class T> void show(const T& obj, std::string_view _titul)
-    {   std::string titul = std::format("myl::show({})", _titul);
-        sf::RenderWindow window(sf::VideoMode(800, 600), titul);
-                         window.setFramerateLimit  (50);
-
-        sf::View camW  = window.getView();
-                 camW.setCenter({0,0});
-                 window.setView(camW);
-
-        while (window.isOpen())
-        {
-            for (sf::Event event; window.pollEvent(event); )
-            {   if (event.type == sf::Event::Closed) window.close();
-            }
-            window.clear  ();
-            window.draw(obj);
-            window.display();
-        }
-    }
-
-    ///--------------------------------------|
-    /// Получить массив делителей для N.     |
-    ///--------------------------------------:
-    inline std::vector<sf::Vector2u> getVSizeWH(const unsigned N)
-    {      std::vector<sf::Vector2u> m;
-
-        for(unsigned a = unsigned(std::sqrt(N)); a != 0; --a)
-        {   if(unsigned  b = N %  a; b == 0)
-            {   m.push_back({N /  a, a});
-                if( m.back().x != a)
-                {   m.push_back( {a, m.back().x});
-                }
-            }
-        }
-        return m;
-    }
-
-    void testfoo_getVSizeWH(){ ln(getVSizeWH(384)) }
-}
-
 
 ///-----------------------------------------------------------------------------
 /// Класс-расширение для sf::Image.
@@ -349,6 +288,9 @@ private:
 struct  DrawImage : sf::Drawable
 {       DrawImage(LoaderImages& _images) : images(_images)
         {   init(myl::getVSizeWH(images.size()).front());
+
+            l(myl::getVSizeWH(images.size()).front())
+            l(myl::getN4Size (myl::getVSizeWH(images.size()).front()))
         }
 
 private:
