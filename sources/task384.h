@@ -165,11 +165,15 @@ private:
 
         for(auto& _2s : m)
         {
-    _2s.similarity[0] = float(unsigned(10000 * ((maxx - _2s.similarity[0]) / maxx)))/100;
-    _2s.similarity[1] = float(unsigned(10000 * ((maxx - _2s.similarity[1]) / maxx)))/100;
+            #define S _2s.similarity
 
-    _2s.similarity[2] = float(unsigned(10000 * ((maxy - _2s.similarity[2]) / maxy)))/100;
-    _2s.similarity[3] = float(unsigned(10000 * ((maxy - _2s.similarity[3]) / maxy)))/100;
+            S[0] = float(unsigned(10000 * ((maxx - S[0]) / maxx)))/100;
+            S[1] = float(unsigned(10000 * ((maxx - S[1]) / maxx)))/100;
+
+            S[2] = float(unsigned(10000 * ((maxy - S[2]) / maxy)))/100;
+            S[3] = float(unsigned(10000 * ((maxy - S[3]) / maxy)))/100;
+
+            #undef S
         }
     }
 
