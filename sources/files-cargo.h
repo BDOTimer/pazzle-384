@@ -9,7 +9,15 @@
 
 namespace win
 {
-    #include <windows.h>
+    #if __has_include(<windows.h>)
+        #include <windows.h>
+        void init()
+        {   win::SetConsoleTitle ("Debug view: Pazzle384");
+            std::system("mode 50,40");
+        }
+    #else
+        void init(){}
+    #endif
 }
 
 ///----------------------------------------------------------------------------|
@@ -19,9 +27,9 @@ namespace win
 struct  Config
 {       Config()
         {   std::system("chcp 65001>nul");
-            std::cout << std::format(BORDER, VERSION) << '\n';
+            win::init();
 
-            win::SetConsoleTitle ("Debug view: Pazzle384");
+            std::cout << bannerlogo();
         }
         Config          (const Config&) = delete;
         Config operator=(const Config&) = delete;
@@ -30,11 +38,10 @@ struct  Config
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
     inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4"};
-    inline static constexpr char BORDER []{R"(
-///--------------------------------------|
-///      {}       |
-///--------------------------------------|
-)"};
+    inline static std::string bannerlogo()
+    {   Strv a{"///--------------------------------------|"};
+        return std::format("{}\n///      {}       |\n{}\n", a,VERSION,a);
+    }
 
     ///--------------------------------------|
     /// Фильтр поиска по расширению файлов.  |
@@ -44,8 +51,8 @@ struct  Config
     ///--------------------------------------|
     /// Базовая директория поиска.           |
     ///--------------------------------------:
-/// const std::string_view dirSource{"./images/" };
-    const std::string_view dirSource{"./genTest/"};
+    const std::string_view dirSource{"./images/" };
+/// const std::string_view dirSource{"./genTest/"};
 
     ///--------------------------------------|
     /// Глубина вложенности папок для поиска.|
@@ -75,8 +82,8 @@ struct  FilesCargo : protected MapPath
     ///--------------------------------------|
     /// Получить массив директорий к файлам. |
     ///--------------------------------------:
-    const std::vector<fs::path>& get(std::string_view ext) const
-    {   static std::vector<fs::path> nul;
+    const      std::vector<fs::path>& get(std::string_view ext) const
+    {   static std::vector<fs::path>  nul;
         if(const auto it = this->find(ext.data()); it != cend())
         {   return it->second;
         }

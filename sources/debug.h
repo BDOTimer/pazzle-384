@@ -32,23 +32,35 @@ template<typename T> using Mat3d = Mat2d<std::vector<T>>;
 
 using Strv = std::string_view;
 
-struct  Ass
-{       Ass(bool pred, Strv filename, int line, Strv s = "")
-        {   if(!pred)
-            {   std::cout
-                    << std::format("ASSERT_ERROR: FILE: \"{}\", LINE: {}, {}\n",
-                            cutStr(filename), line, s);
-                throw(-1);
-            }
-        }
+///-----------------------------------------------------------------------------
+/// Начинка для ASSERT'a.
+///------------------------------------------------------------------------ Ass:
+constexpr char ERROR  []{"ASSERT_ERROR--->FILE: \"{}\", LINE: {} - {}\n"};
+constexpr char WARNING[]{"WARNING--->FILE: \"{}\", LINE: {} - {}\n"};
 
-    Strv cutStr(Strv s) const
+struct  Ass
+{
+    static void error(bool pred, Strv filename, int line, Strv str = "...")
+    {   if(!pred)
+        {   std::cout << std::format(ERROR, cutStr(filename), line, str);
+            throw(-1);
+        }
+    }
+
+    static void warn(bool pred, Strv filename, int line, Strv str)
+    {   if(!pred)
+        {   std::cout << std::format(WARNING, cutStr(filename), line, str);
+        }
+    }
+
+    static Strv cutStr(Strv s)
     {   auto p = s.rfind("sources"); return s.substr(p, s.size() - p);
     }
 };
 
-#define  ASSERT(a)       Ass(a, __FILE__, __LINE__);
-#define ASSERTM(a, mess) Ass(a, __FILE__, __LINE__, mess);
+#define  ASSERT(a)       Ass::error(a, __FILE__, __LINE__);
+#define ASSERTM(a, mess) Ass::error(a, __FILE__, __LINE__, mess);
+#define WARNING(a, mess) Ass::warn (a, __FILE__, __LINE__, mess);
 #define TRY(a) try{a;}catch(...){std::cout << "ERROR exeption: " << #a << '\n';}
 
 #endif // DEBUG_H

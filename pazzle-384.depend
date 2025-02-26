@@ -870,11 +870,11 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1740589391 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
+1740592609 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
 	"debug.h"
 	<windows.h>
 
-1740589391 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
+1740589499 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
 	<cmath>
 	<iomanip>
 	<SFML/Graphics.hpp>
@@ -886,7 +886,7 @@
 	<SFML/Graphics.hpp>
 	"images.h"
 
-1740589391 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
+1740591145 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
 	<filesystem>
 	<algorithm>
 	<iostream>

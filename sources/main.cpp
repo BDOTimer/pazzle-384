@@ -145,7 +145,10 @@ void tests()
 /// Start.
 ///----------------------------------------------------------------------------:
 int main ()
-{   std::cout << "START ...\n\n";
+{
+    [[maybe_unused]] int a{};
+
+    std::cout << "START ...\n\n";
     TRY(tests())
     std::cout << "\nFINISHED PROGRAMM!\n";
 }
