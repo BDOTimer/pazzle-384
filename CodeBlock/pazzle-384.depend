@@ -1,13 +1,10 @@
 # depslib dependency file v1.0
-1740502096 source:c:\workcb-2024\!projects\cforum\pazzle-384\sources\main.cpp
-	<iostream>
-	<string>
-	<vector>
-	<SFML/Graphics.hpp>
-	<memory>
+1740673303 source:c:\workcb-2024\!projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
+	"gen-img.h"
+	"cutter-img.h"
 
 1731167480 c:\workcb-2024\sfml-2.6.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -427,24 +424,14 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1740502145 c:\workcb-2024\!projects\cforum\pazzle-384\sources\files-cargo.h
-	<filesystem>
-	<algorithm>
-	<iostream>
-	<iterator>
-	<fstream>
-	<sstream>
-	<format>
-	<vector>
-	<string>
-	<map>
-	<set>
+1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\files-cargo.h
+	"myl.h"
 
-1740499648 c:\workcb-2024\!projects\cforum\pazzle-384\sources\images.h
+1740672658 c:\workcb-2024\!projects\cforum\pazzle-384\sources\images.h
 	<cmath>
 	<iomanip>
-	<SFML/Graphics.hpp>
 	"files-cargo.h"
+	"cutter-img.h"
 
 1740609444 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
@@ -878,9 +865,7 @@
 	<iomanip>
 	"files-cargo.h"
 
-1740503931 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task384.h
-	<cmath>
-	<iomanip>
+1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task384.h
 	<SFML/Graphics.hpp>
 	"images.h"
 
@@ -920,4 +905,35 @@
 1740610703 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
 	"debug.h"
 	<windows.h>
+
+1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\myl.h
+	"debug.h"
+	"config.h"
+
+1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\debug.h
+	<filesystem>
+	<algorithm>
+	<iostream>
+	<iterator>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<memory>
+	<format>
+	<vector>
+	<string>
+	<cmath>
+	<map>
+	<set>
+	<SFML/Graphics.hpp>
+
+1740658110 c:\workcb-2024\!projects\cforum\pazzle-384\sources\config.h
+	"debug.h"
+	<windows.h>
+
+1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\gen-img.h
+	"myl.h"
+
+1740672760 c:\workcb-2024\!projects\cforum\pazzle-384\sources\cutter-img.h
+	"myl.h"
 

@@ -37,7 +37,7 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.1"};
+    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.2"};
 
     ///--------------------------------------|
     /// Консольный баннер.                   |

@@ -36,14 +36,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="sources/config.h" />
-		<Unit filename="sources/debug.h" />
-		<Unit filename="sources/files-cargo.h" />
-		<Unit filename="sources/gen-img.h" />
-		<Unit filename="sources/images.h" />
-		<Unit filename="sources/main.cpp" />
-		<Unit filename="sources/myl.h" />
-		<Unit filename="sources/task384.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

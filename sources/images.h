@@ -8,6 +8,7 @@
 #include <iomanip>
 
 #include "files-cargo.h"
+#include "cutter-img.h"
 
 ///-----------------------------------------------------------------------------
 /// Класс-расширение для sf::Image.
@@ -292,6 +293,9 @@ struct  DrawImage : sf::Drawable
             l(myl::getVSizeWH(images.size()).front())
             l(myl::getN4Size (myl::getVSizeWH(images.size()).front()))
         }
+    //  DrawImage(tools::CutterImage& _images)
+    //  {
+    //  }
 
 private:
     LoaderImages&       images;

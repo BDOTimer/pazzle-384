@@ -8,6 +8,7 @@
 #include "images.h"
 #include "task384.h"
 #include "gen-img.h"
+#include "cutter-img.h"
 
 ///---------------------------------|
 /// Это прототип ресурса.           |
@@ -122,8 +123,10 @@ void tests()
     ///---------------------------|
     /// Тузлы.                    |
     ///---------------------------:
-    if(bool on = false; on)
-    {   tools::GeneratorImages::test();
+    if(bool on = true; on)
+    {
+    /// tools::GeneratorImages::test();
+    /// tools::CutterImage    ::test();
     }
 
 /// myl::testfoo_getVSizeWH();
