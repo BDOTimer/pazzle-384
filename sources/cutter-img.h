@@ -5,6 +5,7 @@
 /// Разрезать картинку на равные части.
 ///----------------------------------------------------------------------------:
 #include "myl.h"
+#include "task-img.h"
 
 namespace tools
 {
@@ -45,7 +46,7 @@ namespace tools
     ///------------------------------------------------------------------------|
     /// CutterImage.
     ///------------------------------------------------------------- CutterImage:
-    struct  CutterImage : std::vector<sf::Image>
+    struct  CutterImage : std::vector<TaskImage>
     {       CutterImage(bool isNeedSave = false)
             {   std::string  filename {  ConfigCutterImg::get().dir};
                 filename += ConfigCutterImg::get().fileSource;
@@ -91,6 +92,20 @@ namespace tools
             for    (int h = 0, YS = int(WS); h < YS; h += sz.y)
             {   for(int w = 0, XS = int(HS); w < XS; w += sz.x)
                 {
+                    std::string fileDest { ConfigCutterImg::get().fileDest};
+                                fileDest += std::to_string(cnt);
+                                fileDest += ".png";
+
+                    /*///
+                    ///--------------------------------------|
+                    /// Альтернативный способ.               |
+                    ///--------------------------------------:
+                    std::string fileDest2
+                    {   std::format("{}{}{}", ConfigCutterImg::get().fileDest
+                                            , std::to_string(cnt)
+                                            ,  ".png")
+                    };
+                    //*///
 
                     ///--------------------------------------|
                     /// Область входного имиджа.             |
@@ -100,7 +115,7 @@ namespace tools
                     ///--------------------------------------|
                     /// Создаем пустой фрагмент.             |
                     ///--------------------------------------:
-                    emplace_back(sf::Image()); auto& dest = back();
+                    emplace_back(TaskImage(fileDest)); auto& dest = back();
 
                     ///--------------------------------------|
                     /// Внутри фрагмента создаем буфер.      |
@@ -114,10 +129,6 @@ namespace tools
 
                     if(isNeedSave)
                     {
-                        std::string fileDest { ConfigCutterImg::get().fileDest};
-                                    fileDest += std::to_string(cnt);
-                                    fileDest += ".png";
-
                         dest.saveToFile(fileDest);
                     }
 

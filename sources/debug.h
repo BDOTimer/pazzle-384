@@ -35,10 +35,10 @@ template<typename T> using Mat3d = Mat2d<std::vector<T>>;
 using Strv = std::string_view;
 
 ///-----------------------------------------------------------------------------
-/// Начинка для ASSERT'a.
+/// Начинка для ASSERT.
 ///------------------------------------------------------------------------ Ass:
-constexpr char ERROR  []{"ASSERT_ERROR--->FILE: \"{}\", LINE: {} - {}\n"};
-constexpr char WARNING[]{"WARNING--->FILE: \"{}\", LINE: {} - {}\n"};
+constexpr char ERROR  []{ "ASSERT_ERROR--->FILE: \"{}\", LINE: {} - {}\n" };
+constexpr char WARNING[]{ "WARNING--->FILE: \"{}\", LINE: {} - {}\n" };
 
 struct  Ass
 {
