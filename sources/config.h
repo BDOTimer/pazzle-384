@@ -13,7 +13,7 @@ namespace win
         void init()
         {   std::system("chcp 65001>nul");
             win::SetConsoleTitle ("Debug view: Pazzle384");
-            std::system("mode 50,40");
+            //std::system("mode 70,40");
         }
     #else
         void init(){}
@@ -37,7 +37,7 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.2"};
+    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.3"};
 
     ///--------------------------------------|
     /// Консольный баннер.                   |

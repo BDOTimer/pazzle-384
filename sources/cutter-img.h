@@ -49,14 +49,14 @@ namespace tools
     struct  CutterImage : std::vector<TaskImage>
     {       CutterImage(bool isNeedSave = false)
             {   std::string  filename {  ConfigCutterImg::get().dir};
-                filename += ConfigCutterImg::get().fileSource;
+                             filename += ConfigCutterImg::get().fileSource;
+
                 imgSource.loadFromFile(filename);
-                save2Files  (isNeedSave);
+                save2Files          (isNeedSave);
             }
 
-    std::vector<sf::Texture>& getTextures()
-    {   static std::vector<sf::Texture> tt = TaskImage::img2Txtr(*this);
-        return tt;
+    std::vector<sf::Texture> getTextures()
+    {   return TaskImage::img2Txtr (*this);
     }
 
     private:
@@ -78,28 +78,33 @@ namespace tools
             ///--------------------------------------|
             /// Для входного имиджа.                 |
             ///--------------------------------------:
-            const auto& WS = imgSource.getSize().x;
-            const auto& HS = imgSource.getSize().y;
+            const auto WS = imgSource.getSize().x;
+            const auto HS = imgSource.getSize().y;
 
             ///--------------------------------------|
             /// Для каждого фрагмента.               |
             ///--------------------------------------:
-            sf::Vector2i sz
+            const sf::Vector2i sz
             {   int(WS / ConfigCutterImg::get().WH.x),
                 int(HS / ConfigCutterImg::get().WH.y)
             };
 
             unsigned cnt{1};
 
+            l(WS)
+            l(HS)
+
             ///--------------------------------------|
             /// Выборка фрагмента из входного имиджа.|
             ///--------------------------------------:
-            for    (int h = 0, YS = int(WS); h < YS; h += sz.y)
-            {   for(int w = 0, XS = int(HS); w < XS; w += sz.x)
+            for    (int h = 0, YS = int(HS); h < YS; h += sz.y)
+            {   for(int w = 0, XS = int(WS); w < XS; w += sz.x)
                 {
-                    std::string fileDest { ConfigCutterImg::get().fileDest};
+                    std::string fileDest { ConfigCutterImg::get().fileDest };
                                 fileDest += std::to_string(cnt);
                                 fileDest += ".png";
+
+                    l(std::format("[{},{}]", w, h))
 
                     /*///
                     ///--------------------------------------|
@@ -140,6 +145,10 @@ namespace tools
                     ++cnt;
                 }
             }
+
+            l("+++++")
+            l(WxH)
+            l(size())
         }
 
         ///--------------------------------------|

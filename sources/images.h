@@ -24,9 +24,8 @@ struct  LoaderImages : std::vector<TaskImage>
         }
 
 private:
-    std::vector<sf::Texture>& getTextures()
-    {   static std::vector<sf::Texture> tt = TaskImage::img2Txtr(*this);
-        return tt;
+    std::vector<sf::Texture> getTextures()
+    {   return TaskImage::img2Txtr(*this);
     }
 
     friend struct DrawImage;
@@ -48,8 +47,7 @@ private:
 ///------------------------------------------------------------------ DrawImage:
 struct  DrawImage : sf::Drawable
 {       DrawImage(LoaderImages& _images)
-            :     images      ( _images),
-                  textures    (&_images.getTextures())
+            :     images      ( _images)
         {
             init(myl::getVSizeWH(images.size()).front());
 
@@ -57,16 +55,15 @@ struct  DrawImage : sf::Drawable
             l(myl::getN4Size (myl::getVSizeWH(images.size()).front()))
         }
         DrawImage(tools::CutterImage& _images)
-            :     images            ( _images),
-                  textures          (&_images.getTextures())
+            :     images            ( _images)
         {
             init(myl::getVSizeWH(images.size()).front());
         }
 
 private:
-    std::vector<TaskImage>&     images;
-    std::vector<sf::Texture>* textures;
-    std::vector<sf::Sprite>         sp;
+    std::vector<TaskImage>&    images;
+    std::vector<sf::Texture> textures;
+    std::vector<sf::Sprite>        sp;
 
     ///--------------------------------------|
     /// Расстановка спрайтов на экране.      |
@@ -75,9 +72,9 @@ private:
     {
         if(images.empty()) return;
 
-        const std::vector<sf::Texture>& tt = *textures;//images.getTextures();
+        textures = TaskImage::img2Txtr(images);
 
-        sp.reserve(tt.size());
+        sp.reserve(textures.size());
 
         const unsigned& SIDEx  = images.front().getSize().x;
         const unsigned& SIDEy  = images.front().getSize().y;
@@ -92,7 +89,7 @@ private:
             {
                 sp.emplace_back(sf::Sprite());
                 sp.back().setOrigin  (SIDE2x, SIDE2y);
-                sp.back().setTexture (  tt[sz.x  * y + x]);
+                sp.back().setTexture (  textures[sz.x  * y + x]);
                 sp.back().setPosition(  float(x) * SIDEx - sza.x,
                                         float(y) * SIDEy - sza.y);
             }

@@ -432,11 +432,12 @@
 	"cutter-img.h"
 	"task-img.h"
 
-1740609444 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
+1740721847 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
 	"gen-img.h"
+	"cutter-img.h"
 
 1731146446 c:\!cb-2025\sfml-2.6.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -859,16 +860,16 @@
 1740610594 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
 	"myl.h"
 
-1740609074 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
-	<cmath>
-	<iomanip>
+1740740707 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
 	"files-cargo.h"
+	"cutter-img.h"
+	"task-img.h"
 
 1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task384.h
 	<SFML/Graphics.hpp>
 	"images.h"
 
-1740609040 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
+1740721847 c:\!cb-2025\projects\cforum\pazzle-384\sources\debug.h
 	<filesystem>
 	<algorithm>
 	<iostream>
@@ -901,7 +902,7 @@
 	"debug.h"
 	"config.h"
 
-1740610703 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
+1740739216 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
 	"debug.h"
 	<windows.h>
 
@@ -938,5 +939,12 @@
 	"task-img.h"
 
 1740712554 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task-img.h
+	"myl.h"
+
+1740740791 c:\!cb-2025\projects\cforum\pazzle-384\sources\cutter-img.h
+	"myl.h"
+	"task-img.h"
+
+1740721847 c:\!cb-2025\projects\cforum\pazzle-384\sources\task-img.h
 	"myl.h"
 
