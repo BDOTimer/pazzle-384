@@ -41,7 +41,7 @@ struct  Render
 
             camUI = window.getView();
 
-            const int W = 3200;
+            const int W = 1200;
 
             camWorld = camUI;
             camWorld.setCenter({0,0});
@@ -76,6 +76,8 @@ struct  Render
     tools::CutterImage cutter;
     DrawImage      drawCutter;
 
+    sf::Clock           clock;
+
     void process_mouse(const sf::Vector2i& mouse_pos)
     {   std::string    s("XY = [");
                        s += std::to_string(mouse_pos.x) + ", ";
@@ -85,13 +87,66 @@ struct  Render
 
     void loop()
     {
-        sf::Vector2i mouse_pos;
+        float        timeMixer = 0.1f;
+        float elapsedTimeMixer = 0.0f;
+        bool done = false;
+        bool fast = false;
+
+        sf::Vector2i        mouse_pos;
+
+        std::vector<DrawImage*> pVImg
+        {   &drawTexture,
+            &drawCutter
+        };
+        DrawImage* pImg = pVImg[0];
+
+        drawCutter.mixer();
 
         while (window.isOpen())
         {
             for (sf::Event event; window.pollEvent(event);)
             {
                 if (event.type == sf::Event::Closed) window.close();
+
+                if (event.type == sf::Event::KeyPressed)
+                {
+                    /// ...
+
+                    switch(event.key.code)
+                    {
+                        case sf::Keyboard::C:
+                        {   pImg->mixer(20.f);
+                            break;
+                        }
+                        case sf::Keyboard::F:
+                        {   fast = !fast;
+                            break;
+                        }
+                        case sf::Keyboard::Num0:
+                        {   pImg->set2Start();
+                            done = false;
+                            break;
+                        }
+                        case sf::Keyboard::Num1:
+                        {   done = !done;
+                            break;
+                        }
+                        case sf::Keyboard::Enter:
+                        {   static unsigned i = 0;
+                            pImg = pVImg   [i = geti(i, pVImg.size())];
+                            break;
+                        }
+                        case sf::Keyboard::W:
+                        {   camWorld.zoom(1.05f);
+                            break;
+                        }
+                        case sf::Keyboard::S:
+                        {   camWorld.zoom(0.95f);
+                            break;
+                        }
+                        default:;
+                    }
+                }
 
                 ///------------------------------------|
                 /// MouseMoved только здесь.           |
@@ -102,14 +157,21 @@ struct  Render
                 }
             }
 
-            window.clear   ({0, 20, 40});
+            ///----------------------|
+            /// Update.              |
+            ///----------------------:
+            if( (fast || elapsedTimeMixer > timeMixer) && done )
+            {   pImg->mixer       (10.f);
+                elapsedTimeMixer = 0.0f ;
+            }
+
+            window.clear   ({0, 30, 60});
 
             ///----------------------|
             /// cam_world.           |
             ///----------------------:
             window.setView(camWorld);
-        /// window.draw(drawTexture);
-            window.draw(drawCutter );
+            window.draw   (*pImg   );
 
             ///----------------------|
             /// cam_ui.              |
@@ -118,8 +180,15 @@ struct  Render
             window.draw(text);
 
             window.display ();
+
+            elapsedTimeMixer += clock.restart().asSeconds();
         }
     }
+
+    ///--------------------------------------|
+    /// Индекс гоняем по кругу.              |
+    ///--------------------------------------:
+    unsigned geti(unsigned i, unsigned N){ ++i; if(i == N) {i = 0;} return i; }
 };
 
 

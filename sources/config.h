@@ -9,7 +9,7 @@
 namespace win
 {
     #if __has_include(<windows.h>)
-        #include <windows.h>
+        #include      <windows.h>
         void init()
         {   std::system("chcp 65001>nul");
             win::SetConsoleTitle ("Debug view: Pazzle384");
@@ -37,7 +37,7 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.3"};
+    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.4"};
 
     ///--------------------------------------|
     /// Консольный баннер.                   |

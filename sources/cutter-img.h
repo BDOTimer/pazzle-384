@@ -78,8 +78,8 @@ namespace tools
             ///--------------------------------------|
             /// Для входного имиджа.                 |
             ///--------------------------------------:
-            const auto WS = imgSource.getSize().x;
-            const auto HS = imgSource.getSize().y;
+            const auto& WS = imgSource.getSize().x;
+            const auto& HS = imgSource.getSize().y;
 
             ///--------------------------------------|
             /// Для каждого фрагмента.               |
@@ -91,9 +91,6 @@ namespace tools
 
             unsigned cnt{1};
 
-            l(WS)
-            l(HS)
-
             ///--------------------------------------|
             /// Выборка фрагмента из входного имиджа.|
             ///--------------------------------------:
@@ -104,7 +101,7 @@ namespace tools
                                 fileDest += std::to_string(cnt);
                                 fileDest += ".png";
 
-                    l(std::format("[{},{}]", w, h))
+                    /// l(std::format("[{},{}]", w, h))
 
                     /*///
                     ///--------------------------------------|
@@ -138,17 +135,12 @@ namespace tools
                     dest.copy(imgSource, 0, 0, sourceRect);
 
                     if(isNeedSave)
-                    {
-                        dest.saveToFile(fileDest);
+                    {   dest.saveToFile(fileDest);
                     }
 
                     ++cnt;
                 }
             }
-
-            l("+++++")
-            l(WxH)
-            l(size())
         }
 
         ///--------------------------------------|

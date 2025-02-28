@@ -432,7 +432,7 @@
 	"cutter-img.h"
 	"task-img.h"
 
-1740721847 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
+1740745733 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
@@ -860,7 +860,7 @@
 1740610594 c:\!cb-2025\projects\cforum\pazzle-384\sources\files-cargo.h
 	"myl.h"
 
-1740740707 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
+1740745771 c:\!cb-2025\projects\cforum\pazzle-384\sources\images.h
 	"files-cargo.h"
 	"cutter-img.h"
 	"task-img.h"
@@ -902,7 +902,7 @@
 	"debug.h"
 	"config.h"
 
-1740739216 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
+1740741157 c:\!cb-2025\projects\cforum\pazzle-384\sources\config.h
 	"debug.h"
 	<windows.h>
 
@@ -941,7 +941,7 @@
 1740712554 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task-img.h
 	"myl.h"
 
-1740740791 c:\!cb-2025\projects\cforum\pazzle-384\sources\cutter-img.h
+1740744175 c:\!cb-2025\projects\cforum\pazzle-384\sources\cutter-img.h
 	"myl.h"
 	"task-img.h"
 
