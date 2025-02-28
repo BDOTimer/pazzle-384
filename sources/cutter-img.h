@@ -54,6 +54,11 @@ namespace tools
                 save2Files  (isNeedSave);
             }
 
+    std::vector<sf::Texture>& getTextures()
+    {   static std::vector<sf::Texture> tt = TaskImage::img2Txtr(*this);
+        return tt;
+    }
+
     private:
         sf::Image imgSource;
 

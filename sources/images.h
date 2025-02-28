@@ -25,15 +25,7 @@ struct  LoaderImages : std::vector<TaskImage>
 
 private:
     std::vector<sf::Texture>& getTextures()
-    {   static std::vector<sf::Texture> tt;
-        if(!tt.empty())         return  tt;
-
-        tt.reserve(size());
-
-        for(const auto& image : *this)
-        {   tt.emplace_back(sf::Texture());
-            tt.back().loadFromImage(image);
-        }
+    {   static std::vector<sf::Texture> tt = TaskImage::img2Txtr(*this);
         return tt;
     }
 
@@ -65,10 +57,10 @@ struct  DrawImage : sf::Drawable
             l(myl::getN4Size (myl::getVSizeWH(images.size()).front()))
         }
         DrawImage(tools::CutterImage& _images)
-            :     images      ( _images)
-            ///   textures    (&_images.getTextures())
+            :     images            ( _images),
+                  textures          (&_images.getTextures())
         {
-            /// TODO: textures ???
+            init(myl::getVSizeWH(images.size()).front());
         }
 
 private:

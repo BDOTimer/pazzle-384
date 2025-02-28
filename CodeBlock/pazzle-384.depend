@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1740673303 source:c:\workcb-2024\!projects\cforum\pazzle-384\sources\main.cpp
+1740713069 source:c:\workcb-2024\!projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
 	"images.h"
 	"task384.h"
@@ -427,11 +427,10 @@
 1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\files-cargo.h
 	"myl.h"
 
-1740672658 c:\workcb-2024\!projects\cforum\pazzle-384\sources\images.h
-	<cmath>
-	<iomanip>
+1740713233 c:\workcb-2024\!projects\cforum\pazzle-384\sources\images.h
 	"files-cargo.h"
 	"cutter-img.h"
+	"task-img.h"
 
 1740609444 source:c:\!cb-2025\projects\cforum\pazzle-384\sources\main.cpp
 	"files-cargo.h"
@@ -910,7 +909,7 @@
 	"debug.h"
 	"config.h"
 
-1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\debug.h
+1740709586 c:\workcb-2024\!projects\cforum\pazzle-384\sources\debug.h
 	<filesystem>
 	<algorithm>
 	<iostream>
@@ -934,6 +933,10 @@
 1740653178 c:\workcb-2024\!projects\cforum\pazzle-384\sources\gen-img.h
 	"myl.h"
 
-1740672760 c:\workcb-2024\!projects\cforum\pazzle-384\sources\cutter-img.h
+1740712694 c:\workcb-2024\!projects\cforum\pazzle-384\sources\cutter-img.h
+	"myl.h"
+	"task-img.h"
+
+1740712554 c:\workcb-2024\!projects\cforum\pazzle-384\sources\task-img.h
 	"myl.h"
 

@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Release">
-				<Option output="bin/pazzle-384" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/" />
+				<Option output="../bin/pazzle-384" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/" />
 				<Option object_output="obj/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -36,6 +36,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../sources/config.h" />
+		<Unit filename="../sources/cutter-img.h" />
+		<Unit filename="../sources/debug.h" />
+		<Unit filename="../sources/files-cargo.h" />
+		<Unit filename="../sources/gen-img.h" />
+		<Unit filename="../sources/images.h" />
+		<Unit filename="../sources/main.cpp" />
+		<Unit filename="../sources/myl.h" />
+		<Unit filename="../sources/task-img.h" />
+		<Unit filename="../sources/task384.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

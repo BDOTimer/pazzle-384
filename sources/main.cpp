@@ -34,13 +34,14 @@ struct  HeroTest : sf::RectangleShape
 struct  Render
 {       Render() :  window(sf::VideoMode(1200, 800), Config::get().VERSION),
                     drawTexture(images),
-                    task384    (images)
+                    task384    (images),
+                    drawCutter (cutter)
         {
             window.setFramerateLimit  (50);
 
             camUI = window.getView();
 
-            const int W = 1200;
+            const int W = 3200;
 
             camWorld = camUI;
             camWorld.setCenter({0,0});
@@ -71,6 +72,9 @@ struct  Render
     LoaderImages     images;
     DrawImage   drawTexture;
     Task384         task384;
+
+    tools::CutterImage cutter;
+    DrawImage      drawCutter;
 
     void process_mouse(const sf::Vector2i& mouse_pos)
     {   std::string    s("XY = [");
@@ -104,7 +108,8 @@ struct  Render
             /// cam_world.           |
             ///----------------------:
             window.setView(camWorld);
-            window.draw(drawTexture);
+        /// window.draw(drawTexture);
+            window.draw(drawCutter );
 
             ///----------------------|
             /// cam_ui.              |

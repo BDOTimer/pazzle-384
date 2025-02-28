@@ -66,6 +66,20 @@ struct  TaskImage : myImage
 
     const Mat2dPixel& get(eSIDES Side) const { return _4Sides[Side]; }
 
+    ///--------------------------------------|
+    /// Получаем текстуры из имиджей.        |
+    ///--------------------------------------:
+    static std::vector<sf::Texture> img2Txtr(const std::vector<TaskImage>& imgs)
+    {
+        std::vector<sf::Texture> tt; tt.reserve(imgs.size());
+
+        for(const auto& img : imgs)
+        {   tt.emplace_back(sf::Texture());
+            tt.back().loadFromImage(img);
+        }
+        return tt;
+    }
+
 private:
     ///--------------------------------------|
     /// 4 дампа с пикселями.                 |
