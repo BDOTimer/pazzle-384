@@ -1,4 +1,4 @@
-﻿#define SFML_STATIC
+﻿/// #define SFML_STATIC
 ///----------------------------------------------------------------------------|
 /// ...
 /// отключить консольное окно: -mwindows
@@ -32,12 +32,14 @@ struct  HeroTest : sf::RectangleShape
 /// Render.
 ///----------------------------------------------------------------------------:
 struct  Render
-{       Render() :  window(sf::VideoMode(1200, 800), Config::get().VERSION),
-                    drawTexture(images),
-                    task384    (images),
-                    drawCutter (cutter)
+{       Render() :  window(sf::VideoMode({1200, 800})
+                 ,  Config::get().getVersion())
+                 ,  text       (font  )
+                 ,  drawTexture(images)
+                 ,  task384    (images)
+                 ,  drawCutter (cutter)
         {
-            window.setFramerateLimit  (50);
+            window.setFramerateLimit(50);
 
             camUI = window.getView();
 
@@ -45,10 +47,13 @@ struct  Render
 
             camWorld = camUI;
             camWorld.setCenter({0,0});
-            camWorld.setSize(W, W * 800 / 1200);
+            camWorld.setSize({W, W * 800 / 1200});
             camWorld.zoom(0.7f);
 
-            font.loadFromFile   ("c:/windows/fonts/consola.ttf"); ///<-------!!!
+            if(!font.openFromFile("c:/windows/fonts/consola.ttf")) ///<------!!!
+            {
+                /// TODO: ... failed ...
+            }
 
             text.setFont                (font);
             text.setCharacterSize         (18);
@@ -59,9 +64,9 @@ struct  Render
         }
 
     sf::RenderWindow window;
-    HeroTest           hero;
     sf::Font           font;
     sf::Text           text;
+    HeroTest           hero;
 
     ///--------------------|
     /// Камеры вида.       |
@@ -104,43 +109,45 @@ struct  Render
 
         while (window.isOpen())
         {
-            for (sf::Event event; window.pollEvent(event);)
+            while (const std::optional event = window.pollEvent() )
             {
-                if (event.type == sf::Event::Closed) window.close();
+                using E = sf::Event;
 
-                if (event.type == sf::Event::KeyPressed)
+                if(event->is<sf::Event::Closed>()) window.close();
+
+                if (const auto* keyPressed = event->getIf<E::KeyPressed>())
                 {
                     /// ...
 
-                    switch(event.key.code)
+                    switch(keyPressed->scancode)
                     {
-                        case sf::Keyboard::C:
+                        case sf::Keyboard::Scancode::C:
                         {   pImg->mixer(20.f);
                             break;
                         }
-                        case sf::Keyboard::F:
+                        case sf::Keyboard::Scancode::F:
                         {   fast = !fast;
                             break;
                         }
-                        case sf::Keyboard::Num0:
+                        case sf::Keyboard::Scancode::Num0:
                         {   pImg->set2Start();
                             done = false;
                             break;
                         }
-                        case sf::Keyboard::Num1:
+                        case sf::Keyboard::Scancode::Num1:
                         {   done = !done;
                             break;
                         }
-                        case sf::Keyboard::Enter:
+                        case sf::Keyboard::Scancode::Enter:
                         {   static unsigned i = 0;
                             pImg = pVImg   [i = geti(i, pVImg.size())];
                             break;
                         }
-                        case sf::Keyboard::W:
+                        case sf::Keyboard::Scancode::W:
                         {   camWorld.zoom(1.05f);
                             break;
                         }
-                        case sf::Keyboard::S:
+                        case sf::Keyboard::Scancode::S:
                         {   camWorld.zoom(0.95f);
                             break;
                         }
@@ -151,7 +158,7 @@ struct  Render
                 ///------------------------------------|
                 /// MouseMoved только здесь.           |
                 ///------------------------------------:
-                if (event.type == sf::Event::MouseMoved)
+                if(event->is<sf::Event::MouseMoved>())
                 {   mouse_pos  =  sf::Mouse::getPosition(window);
                     process_mouse(mouse_pos);
                 }

@@ -28,7 +28,7 @@ namespace myl
 
     template<class T> void show(const T& obj, std::string_view _titul)
     {   std::string titul = std::format("myl::show({})", _titul);
-        sf::RenderWindow window(sf::VideoMode(800, 600), titul);
+        sf::RenderWindow window(sf::VideoMode({800, 600}), titul);
                          window.setFramerateLimit  (50);
 
         sf::View camW  = window.getView();
@@ -37,8 +37,9 @@ namespace myl
 
         while (window.isOpen())
         {
-            for (sf::Event event; window.pollEvent(event); )
-            {   if (event.type == sf::Event::Closed) window.close();
+            while (const std::optional event = window.pollEvent() )
+            {   if(event->is<sf::Event::Closed>()) window.close();
+
             }
             window.clear  ();
             window.draw(obj);

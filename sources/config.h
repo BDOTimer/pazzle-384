@@ -6,14 +6,20 @@
 ///----------------------------------------------------------------------------:
 #include "debug.h"
 
+#ifdef VER_EXE_BIT_32
+    #define VALBIT " 32 bit."
+#else
+    #define VALBIT " 64 bit."
+#endif
+
 namespace win
 {
     #if __has_include(<windows.h>)
         #include      <windows.h>
         void init()
         {   std::system("chcp 65001>nul");
-            win::SetConsoleTitle ("Debug view: Pazzle384");
-            //std::system("mode 70,40");
+            win::SetConsoleTitle("Debug: Pazzle384");
+        //  std::system("mode 70,40");
         }
     #else
         void init(){}
@@ -37,7 +43,13 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Demo::Pazzle384-ver:0.0.4.4"};
+    inline static constexpr char VERSION[]{"Pazzle384-ver:0.0.4.5"};
+
+    std::string getVersion() const
+    {   std::string name {VERSION};
+                    name += VALBIT;
+        return      name ;
+    }
 
     ///--------------------------------------|
     /// Консольный баннер.                   |

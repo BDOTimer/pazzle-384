@@ -11,7 +11,10 @@
 ///-------------------------------------------------------------------- myImage:
 struct  myImage : sf::Image
 {       myImage(std::string_view _filename) : filename(_filename)
-        {   loadFromFile(filename);
+        {   if(loadFromFile(filename))
+            {
+                /// TODO ...
+            }
         }
 
     std::string filename;
@@ -75,7 +78,10 @@ struct  TaskImage : myImage
 
         for(const auto& img : imgs)
         {   tt.emplace_back(sf::Texture());
-            tt.back().loadFromImage(img);
+            if(!tt.back().loadFromImage(img))
+            {
+                /// TODO ... loading was fail ...
+            }
         }
         return tt;
     }
@@ -108,7 +114,7 @@ private:
                 mat.back().reserve(SZ.x);
 
                 for(unsigned x = 0; x < SZ.x ; ++x)
-                {   mat.back().emplace_back(img.getPixel(x, y));
+                {   mat.back().emplace_back(img.getPixel({x, y}));
                 }
             }
         }
@@ -125,7 +131,7 @@ private:
                 mat.back().reserve(SZ.y);
 
                 for(unsigned y = 0; y < SZ.y ; ++y)
-                {   mat.back().emplace_back(img.getPixel(x, y));
+                {   mat.back().emplace_back(img.getPixel({x, y}));
                 }
             }
         }
@@ -142,7 +148,7 @@ private:
                 mat.back().reserve(SZ.x);
 
                 for(unsigned x = 0; x < SZ.x ; ++x)
-                {   mat.back().emplace_back(img.getPixel(x, y));
+                {   mat.back().emplace_back(img.getPixel({x, y}));
                 }
             }
         }
@@ -159,7 +165,7 @@ private:
                 mat.back().reserve(SZ.y);
 
                 for(unsigned y = 0; y < SZ.y ; ++y)
-                {   mat.back().emplace_back(img.getPixel(x, y));
+                {   mat.back().emplace_back(img.getPixel({x, y}));
                 }
             }
         }
@@ -169,7 +175,7 @@ private:
     {   std::cout << "Start::test_4Sides():\n";
 
         sf::Image img;
-                  img.create(5, 8);
+                  img.resize({5, 8});
 
         ln(img.getSize())
 
@@ -179,19 +185,19 @@ private:
         {
             unsigned char red = 0;
             for(unsigned  x = 0; x < img.getSize().x; ++x)
-            {   img.setPixel(x, 0, {red++, 0, 0});
+            {   img.setPixel({x, 0}, {red++, 0, 0});
             }
 
             for(unsigned  y = 1; y < img.getSize().y; ++y)
-            {   img.setPixel(img.getSize().x - 1, y, {red++, 0, 0});
+            {   img.setPixel({img.getSize().x - 1, y}, {red++, 0, 0});
             }
 
             for(unsigned  x = img.getSize().x - 2; x < img.getSize().x; --x)
-            {   img.setPixel(x, img.getSize().y - 1, {red++, 0, 0});
+            {   img.setPixel({x, img.getSize().y - 1}, {red++, 0, 0});
             }
 
             for(unsigned  y = img.getSize().y - 2; y != 0; --y)
-            {   img.setPixel( 0, y, {red++, 0, 0});
+            {   img.setPixel( {0, y}, {red++, 0, 0});
             }
         }
 
@@ -216,7 +222,7 @@ private:
         for    (unsigned y = 0; y < img.getSize().y; ++y)
         {       std::cout << "  ";
             for(unsigned x = 0; x < img.getSize().x; ++x)
-            {   std::cout << std::setw(3) << (int)img.getPixel(x, y).r;
+            {   std::cout << std::setw(3) << (int)img.getPixel({x, y}).r;
             }   std::cout << '\n';
         }       std::cout << '\n';
 

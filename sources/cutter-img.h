@@ -51,7 +51,11 @@ namespace tools
             {   std::string  filename {  ConfigCutterImg::get().dir};
                              filename += ConfigCutterImg::get().fileSource;
 
-                imgSource.loadFromFile(filename);
+                if(!imgSource.loadFromFile(filename))
+                {
+                    /// TODO: ... failed ...
+                    ASSERTM(false, "loadFromFile is failed ...")
+                }
                 save2Files          (isNeedSave);
             }
 
@@ -84,9 +88,9 @@ namespace tools
             ///--------------------------------------|
             /// Для каждого фрагмента.               |
             ///--------------------------------------:
-            const sf::Vector2i sz
-            {   int(WS / ConfigCutterImg::get().WH.x),
-                int(HS / ConfigCutterImg::get().WH.y)
+            const sf::Vector2u sz
+            {   WS / ConfigCutterImg::get().WH.x,
+                HS / ConfigCutterImg::get().WH.y
             };
 
             unsigned cnt{1};
@@ -117,7 +121,9 @@ namespace tools
                     ///--------------------------------------|
                     /// Область входного имиджа.             |
                     ///--------------------------------------:
-                    const sf::IntRect sourceRect{ w, h, sz.x, sz.y };
+                    const sf::IntRect sourceRect
+                    {   {w, h}, {(int)sz.x, (int)sz.y}
+                    };
 
                     ///--------------------------------------|
                     /// Создаем пустой фрагмент.             |
@@ -127,15 +133,21 @@ namespace tools
                     ///--------------------------------------|
                     /// Внутри фрагмента создаем буфер.      |
                     ///--------------------------------------:
-                    dest.create(sz.x, sz.y);
+                    dest.resize({sz.x, sz.y});
 
                     ///--------------------------------------|
                     /// Копируем в буфер.                    |
                     ///--------------------------------------:
-                    dest.copy(imgSource, 0, 0, sourceRect);
+                    if(!dest.copy(imgSource, {0, 0}, sourceRect))
+                    {
+                         ASSERTM(false, "copy is failed ...")
+                    }
 
                     if(isNeedSave)
-                    {   dest.saveToFile(fileDest);
+                    {   if(!dest.saveToFile(fileDest))
+                        {
+                            ASSERTM(false, "saveToFile is failed ...")
+                        }
                     }
 
                     ++cnt;

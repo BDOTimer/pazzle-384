@@ -103,25 +103,31 @@ private:
         for    (unsigned y = 0; y < WH.y; ++y)
         {   for(unsigned x = 0; x < WH.x; ++x)
             {
-                spp[WH.x  * y + x]->setPosition( float(x) * SIDEx - sza.x,
-                                                 float(y) * SIDEy - sza.y );
+                spp[WH.x  * y + x]->setPosition({float(x) * SIDEx - sza.x,
+                                                 float(y) * SIDEy - sza.y});
             }
         }
     }
 
     void init()
-    {   if(images  .empty()) return;
+    {
+        if(images  .empty()) return;
         if(textures.empty())
         {
             textures = TaskImage::img2Txtr(images);
-            sp       = std::vector<sf::Sprite>(WH.y * WH.x, sf::Sprite());
-            spp.resize(sp.size());
 
-            for(unsigned i = 0; i < sp.size(); ++i)
-            {   sp[i].setTexture( textures[i] );
-                sp[i].setOrigin ( images.front().getSize().x / 2,
-                                  images.front().getSize().y / 2);
-                spp[i] = &sp[i];
+            const unsigned WxH = WH.y * WH.x;
+
+            sp.reserve(WxH);
+            spp.resize(WxH);
+
+            for(unsigned i = 0; i < spp.size(); ++i)
+            {
+                sp.emplace_back(sf::Sprite(textures[i]));
+                sp.back().setOrigin ({(float)images.front().getSize().x / 2,
+                                      (float)images.front().getSize().y / 2});
+
+                spp[i] = &sp.back();
             }
         }
     }

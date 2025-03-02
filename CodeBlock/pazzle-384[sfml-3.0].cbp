@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="pazzle-384[sfml-3.0]" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release-64bit">
+				<Option output="../bin/pazzle-384[sfml-3-64]" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/" />
+				<Option object_output="obj/" />
+				<Option type="1" />
+				<Option compiler="gcc-14-ucrt-64" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++17" />
+					<Add option="-DSFML_STATIC" />
+					<Add directory="$(#sfml30)/include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add option="SFML_STATIC" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add library="sfml-graphics-s" />
+					<Add library="sfml-window-s" />
+					<Add library="sfml-system-s" />
+					<Add library="libfreetype.a" />
+					<Add library="libsfml-main-s.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libwinmm.a" />
+					<Add library="libopengl32.a" />
+					<Add directory="$(#sfml30)/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release-32bit">
+				<Option output="../bin/pazzle-384[sfml-3-32]" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/" />
+				<Option object_output="obj/" />
+				<Option type="1" />
+				<Option compiler="gcc-14-ucrt-32" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++17" />
+					<Add option="-DSFML_STATIC" />
+					<Add option="-DVER_EXE_BIT_32" />
+					<Add directory="$(#sfml30_32bit)/include" />
+					<Add directory="$(#sfml30)/include" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add option="SFML_STATIC" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add library="sfml-graphics-s" />
+					<Add library="sfml-window-s" />
+					<Add library="sfml-system-s" />
+					<Add library="libfreetype.a" />
+					<Add library="libsfml-main-s.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libwinmm.a" />
+					<Add library="libopengl32.a" />
+					<Add directory="$(#sfml30_32bit)/lib" />
+					<Add directory="$(#sfml30)/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../sources/config.h" />
+		<Unit filename="../sources/cutter-img.h" />
+		<Unit filename="../sources/debug.h" />
+		<Unit filename="../sources/files-cargo.h" />
+		<Unit filename="../sources/gen-img.h" />
+		<Unit filename="../sources/images.h" />
+		<Unit filename="../sources/main.cpp" />
+		<Unit filename="../sources/myl.h" />
+		<Unit filename="../sources/task-img.h" />
+		<Unit filename="../sources/task384.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

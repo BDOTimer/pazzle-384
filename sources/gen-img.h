@@ -69,7 +69,7 @@ namespace tools
 
             for(const auto& data : cfg.data)
             {   emplace_back (sf::Image());
-                back().create(data.Size.x, data.Size.y, data.colorA);
+                back().resize({data.Size.x, data.Size.y}, data.colorA);
             }
         }
 
