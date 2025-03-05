@@ -18,7 +18,14 @@ struct  FilesCargo : protected MapPath
             for(const auto& ext : Config::get().filtr)
             {   (*this)[ext.data()] = std::vector<fs::path>();
             }
-            scan();
+            scan(cfg.getDirImg());
+        }
+        FilesCargo(std::string_view dirImg)
+        {
+            for(const auto& ext : Config::get().filtr)
+            {   (*this)[ext.data()] = std::vector<fs::path>();
+            }
+            scan(dirImg);
         }
 
     ///--------------------------------------|
@@ -98,11 +105,11 @@ private:
     ///--------------------------------------|
     /// Поиск согласно конфигу.              |
     ///--------------------------------------:
-    void scan()
+    void scan(std::string_view dirImg)
     {
         const auto& spd = fs::directory_options::skip_permission_denied;
 
-        const fs::recursive_directory_iterator START(cfg.getDirImg(), spd);
+        const fs::recursive_directory_iterator START(dirImg, spd);
         const fs::recursive_directory_iterator END  {};
 
         for (auto ifile  = START; ifile != END; ++ifile)

@@ -81,6 +81,11 @@ struct  Render
     tools::CutterImage cutter;
     DrawImage      drawCutter;
 
+    ///-----------------------------------------|
+    /// Буфер для всех ТЕСТОВЫХ img.            |
+    ///-----------------------------------------:
+    tools::ManegerCutterImage manegerCutterImage;
+
     sf::Clock           clock;
 
     void process_mouse(const sf::Vector2i& mouse_pos)
@@ -99,9 +104,12 @@ struct  Render
 
         sf::Vector2i        mouse_pos;
 
+        std::unique_ptr<DrawImage> ptrDrawImage;
+
         std::vector<DrawImage*> pVImg
         {   &drawTexture,
-            &drawCutter
+            &drawCutter,
+            getDrawImage(ptrDrawImage)
         };
         DrawImage* pImg = pVImg[0];
 
@@ -130,7 +138,7 @@ struct  Render
                             break;
                         }
                         case sf::Keyboard::Scancode::Num0:
-                        {   pImg->set2Start();
+                        {   pImg->set2Start(3);
                             done = false;
                             break;
                         }
@@ -140,7 +148,7 @@ struct  Render
                         }
                         case sf::Keyboard::Scancode::Enter:
                         {   static unsigned i = 0;
-                            pImg = pVImg   [i = geti(i, pVImg.size())];
+                            pImg = pVImg   [i = myl::geti(i, pVImg.size())];
                             break;
                         }
                         case sf::Keyboard::Scancode::W:
@@ -149,6 +157,12 @@ struct  Render
                         }
                         case sf::Keyboard::Scancode::S:
                         {   camWorld.zoom(0.95f);
+                            break;
+                        }
+                        case sf::Keyboard::Scancode::N:
+                        {
+                            pVImg[2] = getDrawImage(ptrDrawImage);
+                            pImg     = pVImg[2];
                             break;
                         }
                         default:;
@@ -192,10 +206,13 @@ struct  Render
         }
     }
 
-    ///--------------------------------------|
-    /// Индекс гоняем по кругу.              |
-    ///--------------------------------------:
-    unsigned geti(unsigned i, unsigned N){ ++i; if(i == N) {i = 0;} return i; }
+    ///------------------------------------|
+    /// DrawImage без кеширования.         |
+    ///------------------------------------:
+    DrawImage* getDrawImage(std::unique_ptr<DrawImage>& ptr)
+    {          ptr = std::make_unique<DrawImage>(manegerCutterImage.getNext());
+        return ptr.get();
+    }
 };
 
 
@@ -206,23 +223,25 @@ void tests()
     ///---------------------------:
     if(bool on = true; on)
     {
-    /// tools::GeneratorImages::test();
-    /// tools::CutterImage    ::test();
+    /// tools::GeneratorImages   ::test();
+    /// tools::CutterImage       ::test();
+    /// tools::ManegerCutterImage::test();
     }
 
-/// myl::testfoo_getVSizeWH();
-/// CastomFilesCargo ::test();
-/// HeroTest         ::test();
-/// TaskImage        ::test();
-/// TaskImage ::test_4Sides();
-/// LoaderImages     ::test();
-/// DrawImage        ::test();
-/// Task384          ::test();
+/// myl ::testfoo_getVSizeWH();
+/// CastomFilesCargo  ::test();
+/// HeroTest          ::test();
+/// TaskImage         ::test();
+/// TaskImage  ::test_4Sides();
+/// LoaderImages      ::test();
+/// DrawImage         ::test();
+/// Task384           ::test();
 
     ///---------------------------|
     /// Основной рендер.          |
     ///---------------------------:
-    std::unique_ptr<Render> run(new Render);
+///
+std::unique_ptr<Render> run(new Render);
 }
 
 ///----------------------------------------------------------------------------|

@@ -72,6 +72,13 @@ namespace myl
     }
 
     inline void testfoo_getVSizeWH(){ ln(getVSizeWH(384)) }
+
+    ///--------------------------------------|
+    /// Индекс гоняем по кругу.              |
+    ///--------------------------------------:
+    inline unsigned geti(unsigned i, unsigned N)
+    {   ++i; if(i == N) {i = 0;} return i;
+    }
 }
 
 #endif // MYL_H

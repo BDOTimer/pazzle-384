@@ -45,18 +45,29 @@ namespace tools
 
     ///------------------------------------------------------------------------|
     /// CutterImage.
-    ///------------------------------------------------------------- CutterImage:
+    ///------------------------------------------------------------ CutterImage:
     struct  CutterImage : std::vector<TaskImage>
     {       CutterImage(bool isNeedSave = false)
             {   std::string  filename {  ConfigCutterImg::get().dir};
                              filename += ConfigCutterImg::get().fileSource;
 
                 if(!imgSource.loadFromFile(filename))
-                {
-                    /// TODO: ... failed ...
-                    ASSERTM(false, "loadFromFile is failed ...")
+                {   ASSERTM(false, "loadFromFile is failed ...")
                 }
-                save2Files          (isNeedSave);
+
+                cut2Imgs();
+
+                if( isNeedSave )
+                {   save2Files();
+                }
+            }
+            CutterImage(std::string_view filename)
+            {
+                if(!imgSource.loadFromFile(filename))
+                {   ASSERTM(false, "loadFromFile is failed ...")
+                }
+
+                cut2Imgs();
             }
 
     std::vector<sf::Texture> getTextures()
@@ -66,7 +77,7 @@ namespace tools
     private:
         sf::Image imgSource;
 
-        void save2Files(bool isNeedSave)
+        void cut2Imgs()
         {
             ///--------------------------------------|
             /// Количество фрагментов.               |
@@ -139,19 +150,22 @@ namespace tools
                     /// Копируем в буфер.                    |
                     ///--------------------------------------:
                     if(!dest.copy(imgSource, {0, 0}, sourceRect))
-                    {
-                         ASSERTM(false, "copy is failed ...")
-                    }
-
-                    if(isNeedSave)
-                    {   if(!dest.saveToFile(fileDest))
-                        {
-                            ASSERTM(false, "saveToFile is failed ...")
-                        }
+                    {   ASSERTM(false, "copy is failed ...")
                     }
 
                     ++cnt;
                 }
+            }
+        }
+
+        void save2Files()
+        {
+            for(const auto& img : *this)
+            {
+                if(!img.saveToFile(img.filename))
+                {   ASSERTM(false, "saveToFile is failed ...")
+                }
+
             }
         }
 
@@ -161,6 +175,42 @@ namespace tools
         TEST
         {
             CutterImage cutterImage(true);
+        }
+    };
+
+
+    ///------------------------------------------------------------------------|
+    /// ManegerCutterImage.
+    /// Сюда теперь можно сложить весь набор тествых картинок.
+    ///----------------------------------------------------- ManegerCutterImage:
+    struct  ManegerCutterImage : std::vector<CutterImage*>
+    {       ManegerCutterImage(std::string_view dir = "./img/")
+                :   filesCargo(dir)
+            {
+                const auto& cargo = filesCargo.get(".jpg");
+
+                reserve(cargo.size());
+
+                for(const auto&  filename : cargo)
+                {   alloc.emplace_back (CutterImage(filename.string()));
+                    push_back(&alloc.back());
+                }
+            }
+
+        CutterImage& getNext()
+        {   auto i = cnt; cnt = myl::geti(i, size()); return *((*this)[i]);
+        }
+
+    private:
+        std::list<CutterImage> alloc;
+        FilesCargo        filesCargo;
+
+        unsigned cnt{};
+
+        TEST
+        {
+            ManegerCutterImage manegerCutterImage;
+                            ln(manegerCutterImage.filesCargo.debug())
         }
     };
 
