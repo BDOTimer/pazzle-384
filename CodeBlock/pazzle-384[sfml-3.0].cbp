@@ -17,6 +17,8 @@
 					<Add option="-std=c++17" />
 					<Add option="-DSFML_STATIC" />
 					<Add directory="$(#sfml30)/include" />
+					<Add directory="../extlib/imgui-sfml-3.0" />
+					<Add directory="../extlib/imgui-1.91.8" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add option="SFML_STATIC" />
@@ -24,6 +26,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-static" />
+					<Add library="../extlib/imgui-sfml-3.0/64/libImGui-SFML.a" />
 					<Add library="sfml-graphics-s" />
 					<Add library="sfml-window-s" />
 					<Add library="sfml-system-s" />
@@ -32,38 +35,6 @@
 					<Add library="libgdi32.a" />
 					<Add library="libwinmm.a" />
 					<Add library="libopengl32.a" />
-					<Add directory="$(#sfml30)/lib" />
-				</Linker>
-			</Target>
-			<Target title="Release-32bit">
-				<Option output="../bin/pazzle-384[sfml-3-32]" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../bin/" />
-				<Option object_output="obj/" />
-				<Option type="1" />
-				<Option compiler="gcc-14-ucrt-32" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add option="-std=c++17" />
-					<Add option="-DSFML_STATIC" />
-					<Add option="-DVER_EXE_BIT_32" />
-					<Add directory="$(#sfml30_32bit)/include" />
-					<Add directory="$(#sfml30)/include" />
-				</Compiler>
-				<ResourceCompiler>
-					<Add option="SFML_STATIC" />
-				</ResourceCompiler>
-				<Linker>
-					<Add option="-s" />
-					<Add option="-static" />
-					<Add library="sfml-graphics-s" />
-					<Add library="sfml-window-s" />
-					<Add library="sfml-system-s" />
-					<Add library="libfreetype.a" />
-					<Add library="libsfml-main-s.a" />
-					<Add library="libgdi32.a" />
-					<Add library="libwinmm.a" />
-					<Add library="libopengl32.a" />
-					<Add directory="$(#sfml30_32bit)/lib" />
 					<Add directory="$(#sfml30)/lib" />
 				</Linker>
 			</Target>
@@ -71,7 +42,23 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="../extlib/imgui-sfml-3.0" />
+			<Add directory="../extlib/imgui-1.91.8" />
 		</Compiler>
+		<Linker>
+			<Add library="../extlib/imgui-sfml-3.0/64/libImGui-SFML.a" />
+		</Linker>
+		<Unit filename="../extlib/imgui-1.91.8/imconfig.h" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui.h" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui_demo.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui_draw.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui_internal.h" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui_tables.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/imgui_widgets.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/imstb_rectpack.h" />
+		<Unit filename="../extlib/imgui-1.91.8/imstb_textedit.h" />
+		<Unit filename="../extlib/imgui-1.91.8/imstb_truetype.h" />
 		<Unit filename="../sources/config.h" />
 		<Unit filename="../sources/cutter-img.h" />
 		<Unit filename="../sources/debug.h" />

@@ -3,6 +3,8 @@
 /// ...
 /// отключить консольное окно: -mwindows
 ///----------------------------------------------------------------------------:
+#include "imgui.h"
+#include "imgui-SFML.h"
 
 #include "files-cargo.h"
 #include "images.h"
@@ -40,6 +42,10 @@ struct  Render
                  ,  drawCutter (cutter)
         {
             window.setFramerateLimit(50);
+            bool isGood = ImGui::SFML::Init(window);
+            if (!isGood)
+            {   ASSERTM(false, "saveToFile is failed ...")
+            }
 
             camUI = window.getView();
 
@@ -119,6 +125,8 @@ struct  Render
         {
             while (const std::optional event = window.pollEvent() )
             {
+                ImGui::SFML::ProcessEvent(window, *event);
+
                 using E = sf::Event;
 
                 if(event->is<sf::Event::Closed>()) window.close();
@@ -186,6 +194,20 @@ struct  Render
                 elapsedTimeMixer = 0.0f ;
             }
 
+            const auto delta  = clock.restart();
+            elapsedTimeMixer += delta.asSeconds();
+
+            ///----------------------|
+            /// ImGui::SFML.         |
+            ///----------------------:
+            ImGui::SFML::Update(window, delta);
+
+            ImGui::ShowDemoWindow();
+
+            ImGui::Begin("Hello, world!");
+            ImGui::Button("Look at this pretty button");
+            ImGui::End();
+
             window.clear   ({0, 30, 60});
 
             ///----------------------|
@@ -200,9 +222,8 @@ struct  Render
             window.setView   (camUI);
             window.draw(text);
 
+            ImGui::SFML::Render(window);
             window.display ();
-
-            elapsedTimeMixer += clock.restart().asSeconds();
         }
     }
 
