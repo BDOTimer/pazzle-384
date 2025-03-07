@@ -204,9 +204,7 @@ struct  Render
 
             ImGui::ShowDemoWindow();
 
-            ImGui::Begin("Hello, world!");
-            ImGui::Button("Look at this pretty button");
-            ImGui::End();
+            drawImgui();
 
             window.clear   ({0, 30, 60});
 
@@ -233,6 +231,13 @@ struct  Render
     DrawImage* getDrawImage(std::unique_ptr<DrawImage>& ptr)
     {          ptr = std::make_unique<DrawImage>(manegerCutterImage.getNext());
         return ptr.get();
+    }
+
+    void drawImgui()
+    {
+        ImGui::Begin ("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End   ();
     }
 };
 
