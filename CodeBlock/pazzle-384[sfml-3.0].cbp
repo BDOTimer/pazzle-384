@@ -11,7 +11,7 @@
 				<Option working_dir="../bin/" />
 				<Option object_output="obj/" />
 				<Option type="1" />
-				<Option compiler="mingw_gcc_142-ucrt" />
+				<Option compiler="gcc-14-ucrt-64" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++17" />
@@ -67,6 +67,7 @@
 		<Unit filename="../sources/images.h" />
 		<Unit filename="../sources/main.cpp" />
 		<Unit filename="../sources/myl.h" />
+		<Unit filename="../sources/nano-test.h" />
 		<Unit filename="../sources/task-img.h" />
 		<Unit filename="../sources/task384.h" />
 		<Extensions>

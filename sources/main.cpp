@@ -11,6 +11,7 @@
 #include "task384.h"
 #include "gen-img.h"
 #include "cutter-img.h"
+#include "nano-test.h"
 
 ///---------------------------------|
 /// Это прототип ресурса.           |
@@ -262,6 +263,7 @@ void tests()
 /// LoaderImages      ::test();
 /// DrawImage         ::test();
 /// Task384           ::test();
+    NanoTest          ::test();
 
     ///---------------------------|
     /// Основной рендер.          |
