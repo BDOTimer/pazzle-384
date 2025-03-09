@@ -263,7 +263,7 @@ void tests()
 /// LoaderImages      ::test();
 /// DrawImage         ::test();
 /// Task384           ::test();
-    NanoTest          ::test();
+/// NanoTest          ::test();
 
     ///---------------------------|
     /// Основной рендер.          |
