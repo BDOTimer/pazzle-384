@@ -5,6 +5,7 @@
 ///----------------------------------------------------------------------------:
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "misc/cpp/imgui_stdlib.h"
 
 #include "files-cargo.h"
 #include "images.h"
@@ -43,10 +44,8 @@ struct  Render
                  ,  drawCutter (cutter)
         {
             window.setFramerateLimit(50);
-            bool isGood = ImGui::SFML::Init(window);
-            if (!isGood)
-            {   ASSERTM(false, "saveToFile is failed ...")
-            }
+
+            initImgui();
 
             camUI = window.getView();
 
@@ -57,7 +56,7 @@ struct  Render
             camWorld.setSize({W, W * 800 / 1200});
             camWorld.zoom(0.7f);
 
-            if(!font.openFromFile("c:/windows/fonts/consola.ttf")) ///<------!!!
+            if(!font.openFromFile("consola.ttf"))
             {
                 /// TODO: ... failed ...
             }
@@ -234,11 +233,70 @@ struct  Render
         return ptr.get();
     }
 
+    std::string  igStr {"...text..."};
+    std::string  igHelp{"KEYBOARD: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxZZZ\n"
+                        "  W.S,1,0,C,F,N,Enter\n"};
+    float        f{};
+
+    void initImgui()
+    {
+        bool
+        isGood = ImGui::SFML::Init(window);
+        if (!isGood)
+        {   ASSERTM(false, "ImGui::SFML::Init() is failed ...")
+        }
+
+        ImGuiIO& io = ImGui::GetIO();
+
+                 io.Fonts->Clear();
+        isGood = io.Fonts->AddFontFromFileTTF("consola.ttf", 18.f, NULL,
+                 io.Fonts->GetGlyphRangesCyrillic());
+        if (!isGood)
+        {   ASSERTM(false, "io.Fonts->AddFontFromFileTTF() is failed ...")
+        }
+
+        isGood = ImGui::SFML::UpdateFontTexture();
+        if (!isGood)
+        {   ASSERTM(false, "ImGui::SFML::UpdateFontTexture()is failed ...")
+        }
+
+        ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImColor(35,35,35, 190);
+    }
+
     void drawImgui()
     {
-        ImGui::Begin ("Hello, world!");
-        ImGui::Button("Look at this pretty button");
+    /// ImGui::SetNextWindowSize({500,500});
+        ImGui::Begin ("Hello, Informer!",
+                       nullptr,
+                       ImGuiWindowFlags_NoCollapse
+                    |  ImGuiWindowFlags_HorizontalScrollbar
+                    |  ImGuiWindowFlags_AlwaysVerticalScrollbar
+                /// |  ImGuiWindowFlags_NoBackground
+                /// |  ImGuiWindowFlags_NoResize
+                /// |  ImGuiWindowFlags_AlwaysAutoResize
+        );
+
+        if(ImGui::Button("PRESS-ЯЯЯ",{100,50}))
+        {   std::cout << "PRESS\n";
+        }
+        ImGui::SameLine ();
+        ImGui::InputText( "Text", &igStr, sizeof igStr);
+
+        ImGui::DragFloat("float##3a", &f);
+        ImGui::Text("%s", igHelp.c_str());
+
+        ImGui::PushItemWidth(10);
+        ImGui::Text("%s", igHelp.c_str());
+        ImGui::PopItemWidth();
+
         ImGui::End   ();
+
+        /*
+        ImGui::SetNextWindowSize({50,50});
+        ImGui::BeginTooltip            ();
+        ImGui::Text("%s", igHelp.c_str());
+        ImGui::EndTooltip              ();
+        */
     }
 };
 
@@ -263,7 +321,7 @@ void tests()
 /// LoaderImages      ::test();
 /// DrawImage         ::test();
 /// Task384           ::test();
-    NanoTest          ::test();
+/// NanoTest          ::test();
 
     ///---------------------------|
     /// Основной рендер.          |

@@ -11,7 +11,7 @@
 				<Option working_dir="../bin/" />
 				<Option object_output="obj/" />
 				<Option type="1" />
-				<Option compiler="gcc-14-ucrt-64" />
+				<Option compiler="mingw_gcc_142-ucrt" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++17" />
@@ -59,6 +59,8 @@
 		<Unit filename="../extlib/imgui-1.91.8/imstb_rectpack.h" />
 		<Unit filename="../extlib/imgui-1.91.8/imstb_textedit.h" />
 		<Unit filename="../extlib/imgui-1.91.8/imstb_truetype.h" />
+		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.cpp" />
+		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.h" />
 		<Unit filename="../sources/config.h" />
 		<Unit filename="../sources/cutter-img.h" />
 		<Unit filename="../sources/debug.h" />
