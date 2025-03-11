@@ -2,59 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release-64bit" />
-	<File name="..\sources\task384.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7188" topLine="206" />
-		</Cursor>
-	</File>
-	<File name="..\extlib\imgui-1.91.8\imgui_demo.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="236211" topLine="4114" />
-		</Cursor>
-	</File>
-	<File name="..\sources\cutter-img.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6303" topLine="161" />
-		</Cursor>
-	</File>
-	<File name="..\sources\ui-imgui.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1167" topLine="33" />
-		</Cursor>
-	</File>
-	<File name="..\sources\myl.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="279" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="..\sources\nano-test.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1701" topLine="45" />
-		</Cursor>
-	</File>
 	<File name="..\sources\images.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="831" topLine="11" />
-		</Cursor>
-	</File>
-	<File name="..\extlib\imgui-1.91.8\imgui.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="209706" topLine="2008" />
-		</Cursor>
-	</File>
-	<File name="..\sources\files-cargo.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1700" topLine="42" />
-		</Cursor>
-	</File>
-	<File name="..\sources\gen-img.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="327" topLine="67" />
-		</Cursor>
-	</File>
-	<File name="..\sources\main.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8557" topLine="259" />
 		</Cursor>
 	</File>
 	<File name="..\sources\task-img.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -62,14 +12,64 @@
 			<Cursor1 position="2616" topLine="117" />
 		</Cursor>
 	</File>
-	<File name="..\sources\debug.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\extlib\imgui-1.91.8\imgui.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="563" topLine="18" />
+			<Cursor1 position="209706" topLine="2467" />
+		</Cursor>
+	</File>
+	<File name="..\sources\ui-imgui.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1167" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="..\sources\nano-test.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1701" topLine="45" />
+		</Cursor>
+	</File>
+	<File name="..\sources\gen-img.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="327" topLine="67" />
+		</Cursor>
+	</File>
+	<File name="..\sources\files-cargo.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1700" topLine="42" />
+		</Cursor>
+	</File>
+	<File name="..\extlib\imgui-1.91.8\imgui_demo.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="236211" topLine="4114" />
+		</Cursor>
+	</File>
+	<File name="..\sources\myl.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="279" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="..\sources\main.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4190" topLine="136" />
 		</Cursor>
 	</File>
 	<File name="..\sources\config.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2434" topLine="55" />
+		</Cursor>
+	</File>
+	<File name="..\sources\task384.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7188" topLine="206" />
+		</Cursor>
+	</File>
+	<File name="..\sources\cutter-img.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6303" topLine="161" />
+		</Cursor>
+	</File>
+	<File name="..\sources\debug.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="852" topLine="19" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

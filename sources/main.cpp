@@ -50,8 +50,8 @@ struct  Render
 
             camWorld = camUI;
             camWorld.setCenter({0,0});
-            camWorld.setSize({W, W * 800 / 1200});
-            camWorld.zoom(0.7f);
+            camWorld.setSize  ({W, W * 800 / 1200});
+            camWorld.zoom     ( 0.7f);
 
             if(!font.openFromFile("consola.ttf"))
             {   ASSERTM(false, "openFromFile(\"*.ttf\") is failed ...")
@@ -63,6 +63,8 @@ struct  Render
             text.setFillColor(sf::Color::Yellow);
 
             uiAllBind();
+
+            //test_01();
 
             loop();
         }
@@ -141,6 +143,9 @@ struct  Render
                 using E = sf::Event;
 
                 if(event->is<sf::Event::Closed>()) window.close();
+
+                if(ImGui::IsAnyItemActive()) break;
+            /// if(ImGui::IsWindowFocused()) break;
 
                 if (const auto* keyPressed = event->getIf<E::KeyPressed>())
                 {
@@ -226,7 +231,7 @@ struct  Render
             /// cam_ui.              |
             ///----------------------:
             window.setView   (camUI);
-            window.draw(text);
+        /// window.draw(text);
 
             ImGui::SFML::Render(window);
             window.display ();
@@ -244,6 +249,12 @@ struct  Render
     void uiAllBind()
     {
         ui.add({"MousePosition", &MousePosition});
+    }
+
+    void test_01()
+    {
+        //ImGuiPlatformIO& platformIO = ImGui::GetPlatformIO();
+        //ImGuiViewport* viewport = ImGui::GetMainViewport();
     }
 };
 
