@@ -48,6 +48,7 @@
 		<Linker>
 			<Add library="../extlib/imgui-sfml-3.0/64/libImGui-SFML.a" />
 		</Linker>
+		<Unit filename="../doc.txt" />
 		<Unit filename="../extlib/imgui-1.91.8/imconfig.h" />
 		<Unit filename="../extlib/imgui-1.91.8/imgui.cpp" />
 		<Unit filename="../extlib/imgui-1.91.8/imgui.h" />

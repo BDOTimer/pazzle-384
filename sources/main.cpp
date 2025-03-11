@@ -4,12 +4,9 @@
 /// отключить консольное окно: -mwindows
 ///----------------------------------------------------------------------------:
 #include "ui-imgui.h"
-#include "files-cargo.h"
-#include "images.h"
-#include "task384.h"
-#include "gen-img.h"
-#include "cutter-img.h"
 #include "nano-test.h"
+#include "gen-img.h"
+#include "task384.h"
 
 
 ///---------------------------------|
