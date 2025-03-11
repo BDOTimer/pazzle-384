@@ -85,19 +85,21 @@ struct  _2Sides
     ///--------------------------------------:
     std::string debug() const
     {
-        std::cout << "1. "; l(a->filename)
-        std::cout << "2. "; l(b->filename) std::cout << '\n';
+        std::stringstream ss;
 
-        unsigned cnt{};
+        ss << "1. a->filename: " << a->filename << '\n'
+           << "2. a->filename: " << b->filename << '\n';
+
+        unsigned i{};
         for(const auto similar : similarity)
-        {   std::cout << std::format("[{}, {}]: Similar: {} %\n",
-                              TaskImage::whatSIDE(R[cnt][0])  ,
-                              TaskImage::whatSIDE(R[cnt][1])  ,
-                              similar);
-          ++cnt;
+        {   ss << std::format("[{}, {}]: Similar: {} %\n",
+                           TaskImage::whatSIDE(R[i][0])  ,
+                           TaskImage::whatSIDE(R[i][1])  ,
+                           similar);
+          ++i;
         }
 
-        return "";
+        return ss.str();
     }
 };
 
@@ -136,6 +138,26 @@ struct  Task384 : std::vector<TaskImage const*>
         ASSERT(calcElem(size()) == m.size())
 
         conv2persent();
+    }
+
+    ///--------------------------------------|
+    /// info.                                |
+    ///--------------------------------------:
+    std::string info(unsigned cntMax = unsigned(-1)) const
+    {
+        std::stringstream ss{"Task384: ...\n"};
+
+        unsigned cnt{};
+        for(const auto& e : m)
+        {
+            ss << "\n///-------------------------------:" << cnt << "\n"
+               << e.debug();
+
+            if(++cnt == cntMax) break;
+        }
+
+        ss << "\n...\n\nВсего таких пар: " << m.size() << '\n';
+        return ss.str();
     }
 
 private:
@@ -192,19 +214,9 @@ private:
         _2Sides _2sides(task384[0], task384[1]);
                 _2sides.debug();
 */
-        l(calcElem(images.size()) == task384.m.size())
+        ASSERT(calcElem(images.size()) == task384.m.size())
 
-        unsigned cnt{};
-
-        for(const auto& e : task384.m)
-        {
-            std::cout << "\n///-------------------------------:"; l(cnt)
-            e.debug();
-
-            if(++cnt == 20) break;
-        }
-
-        std::cout << "\n...\n\nВсего таких пар: " << task384.m.size() << '\n';
+        std::cout << task384.info(20);
     }
 };
 

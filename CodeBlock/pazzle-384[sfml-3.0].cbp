@@ -72,6 +72,7 @@
 		<Unit filename="../sources/nano-test.h" />
 		<Unit filename="../sources/task-img.h" />
 		<Unit filename="../sources/task384.h" />
+		<Unit filename="../sources/ui-imgui.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

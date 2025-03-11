@@ -3,16 +3,14 @@
 /// ...
 /// отключить консольное окно: -mwindows
 ///----------------------------------------------------------------------------:
-#include "imgui.h"
-#include "imgui-SFML.h"
-#include "misc/cpp/imgui_stdlib.h"
-
+#include "ui-imgui.h"
 #include "files-cargo.h"
 #include "images.h"
 #include "task384.h"
 #include "gen-img.h"
 #include "cutter-img.h"
 #include "nano-test.h"
+
 
 ///---------------------------------|
 /// Это прототип ресурса.           |
@@ -38,14 +36,13 @@ struct  HeroTest : sf::RectangleShape
 struct  Render
 {       Render() :  window(sf::VideoMode({1200, 800})
                  ,  Config::get().getVersion())
+                 ,  ui         (window)
                  ,  text       (font  )
                  ,  drawTexture(images)
                  ,  task384    (images)
                  ,  drawCutter (cutter)
         {
             window.setFramerateLimit(50);
-
-            initImgui();
 
             camUI = window.getView();
 
@@ -57,19 +54,29 @@ struct  Render
             camWorld.zoom(0.7f);
 
             if(!font.openFromFile("consola.ttf"))
-            {
-                /// TODO: ... failed ...
+            {   ASSERTM(false, "openFromFile(\"*.ttf\") is failed ...")
             }
 
-            text.setFont                (font);
-            text.setCharacterSize         (18);
-            text.setStyle  (sf::Text::Regular);
+            text.setFont                  (font);
+            text.setCharacterSize           (18);
+            text.setStyle    (sf::Text::Regular);
             text.setFillColor(sf::Color::Yellow);
+
+            uiAllBind();
 
             loop();
         }
 
+    ///--------------------|
+    /// Главное Окно.      |
+    ///--------------------:
     sf::RenderWindow window;
+
+    ///--------------------|
+    /// Gui.               |
+    ///--------------------:
+    uii::UITest          ui;
+
     sf::Font           font;
     sf::Text           text;
     HeroTest           hero;
@@ -92,17 +99,21 @@ struct  Render
     ///-----------------------------------------:
     tools::ManegerCutterImage manegerCutterImage;
 
-    sf::Clock           clock;
+    sf::Clock clock;
 
+    std::string MousePosition;
     void process_mouse(const sf::Vector2i& mouse_pos)
     {   std::string    s("XY = [");
                        s += std::to_string(mouse_pos.x) + ", ";
                        s += std::to_string(mouse_pos.y) + "]" ;
-        text.setString(s);
+        //text.setString(s);
+        std::swap(s, MousePosition);
     }
 
     void loop()
     {
+        ui << task384.info(100);
+
         float        timeMixer = 0.1f;
         float elapsedTimeMixer = 0.0f;
         bool done = false;
@@ -201,10 +212,7 @@ struct  Render
             /// ImGui::SFML.         |
             ///----------------------:
             ImGui::SFML::Update(window, delta);
-
-            ImGui::ShowDemoWindow();
-
-            drawImgui();
+            ui.go();
 
             window.clear   ({0, 30, 60});
 
@@ -233,70 +241,9 @@ struct  Render
         return ptr.get();
     }
 
-    std::string  igStr {"...text..."};
-    std::string  igHelp{"KEYBOARD: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxZZZ\n"
-                        "  W.S,1,0,C,F,N,Enter\n"};
-    float        f{};
-
-    void initImgui()
+    void uiAllBind()
     {
-        bool
-        isGood = ImGui::SFML::Init(window);
-        if (!isGood)
-        {   ASSERTM(false, "ImGui::SFML::Init() is failed ...")
-        }
-
-        ImGuiIO& io = ImGui::GetIO();
-
-                 io.Fonts->Clear();
-        isGood = io.Fonts->AddFontFromFileTTF("consola.ttf", 18.f, NULL,
-                 io.Fonts->GetGlyphRangesCyrillic());
-        if (!isGood)
-        {   ASSERTM(false, "io.Fonts->AddFontFromFileTTF() is failed ...")
-        }
-
-        isGood = ImGui::SFML::UpdateFontTexture();
-        if (!isGood)
-        {   ASSERTM(false, "ImGui::SFML::UpdateFontTexture()is failed ...")
-        }
-
-        ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImColor(35,35,35, 190);
-    }
-
-    void drawImgui()
-    {
-    /// ImGui::SetNextWindowSize({500,500});
-        ImGui::Begin ("Hello, Informer!",
-                       nullptr,
-                       ImGuiWindowFlags_NoCollapse
-                    |  ImGuiWindowFlags_HorizontalScrollbar
-                    |  ImGuiWindowFlags_AlwaysVerticalScrollbar
-                /// |  ImGuiWindowFlags_NoBackground
-                /// |  ImGuiWindowFlags_NoResize
-                /// |  ImGuiWindowFlags_AlwaysAutoResize
-        );
-
-        if(ImGui::Button("PRESS-ЯЯЯ",{100,50}))
-        {   std::cout << "PRESS\n";
-        }
-        ImGui::SameLine ();
-        ImGui::InputText( "Text", &igStr, sizeof igStr);
-
-        ImGui::DragFloat("float##3a", &f);
-        ImGui::Text("%s", igHelp.c_str());
-
-        ImGui::PushItemWidth(10);
-        ImGui::Text("%s", igHelp.c_str());
-        ImGui::PopItemWidth();
-
-        ImGui::End   ();
-
-        /*
-        ImGui::SetNextWindowSize({50,50});
-        ImGui::BeginTooltip            ();
-        ImGui::Text("%s", igHelp.c_str());
-        ImGui::EndTooltip              ();
-        */
+        ui.add({"MousePosition", &MousePosition});
     }
 };
 
