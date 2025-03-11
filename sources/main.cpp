@@ -37,7 +37,6 @@ struct  Render
                  ,  text       (font  )
                  ,  drawTexture(images)
                  ,  task384    (images)
-                 ,  drawCutter (cutter)
         {
             window.setFramerateLimit(50);
 
@@ -90,9 +89,6 @@ struct  Render
     DrawImage   drawTexture;
     Task384         task384;
 
-    tools::CutterImage cutter;
-    DrawImage      drawCutter;
-
     ///-----------------------------------------|
     /// Буфер для всех ТЕСТОВЫХ img.            |
     ///-----------------------------------------:
@@ -111,7 +107,7 @@ struct  Render
 
     void loop()
     {
-        ui << task384.info(100);
+        ui << uii::Clear{} << task384.info(100);
 
         float        timeMixer = 0.1f;
         float elapsedTimeMixer = 0.0f;
@@ -124,12 +120,11 @@ struct  Render
 
         std::vector<DrawImage*> pVImg
         {   &drawTexture,
-            &drawCutter,
             getDrawImage(ptrDrawImage)
         };
         DrawImage* pImg = pVImg[0];
 
-        drawCutter.mixer();
+        updCamera(*pImg);
 
         while (window.isOpen())
         {
@@ -152,6 +147,7 @@ struct  Render
                     {
                         case sf::Keyboard::Scancode::C:
                         {   pImg->mixer(20.f);
+                            updCamera(*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::F:
@@ -160,6 +156,7 @@ struct  Render
                         }
                         case sf::Keyboard::Scancode::Num0:
                         {   pImg->set2Start(3);
+                            updCamera(*pImg);
                             done = false;
                             break;
                         }
@@ -170,6 +167,7 @@ struct  Render
                         case sf::Keyboard::Scancode::Enter:
                         {   static unsigned i = 0;
                             pImg = pVImg   [i = myl::geti(i, pVImg.size())];
+                            updCamera(*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::W:
@@ -182,8 +180,10 @@ struct  Render
                         }
                         case sf::Keyboard::Scancode::N:
                         {
-                            pVImg[2] = getDrawImage(ptrDrawImage);
-                            pImg     = pVImg[2];
+                            pVImg[1] = getDrawImage(ptrDrawImage);
+                            pImg     = pVImg[1];
+                            pImg->mixer();
+                            updCamera(*pImg);
                             break;
                         }
                         default:;
@@ -241,6 +241,13 @@ struct  Render
     DrawImage* getDrawImage(std::unique_ptr<DrawImage>& ptr)
     {          ptr = std::make_unique<DrawImage>(manegerCutterImage.getNext());
         return ptr.get();
+    }
+
+    void updCamera(const DrawImage& gi)
+    {   const float& SZX =  gi.getSize().x;
+        const float& SZY =  gi.getSize().y;
+        if(SZX > SZY) camWorld.setSize({SZX, SZX * 800 / 1200});
+        else          camWorld.setSize({SZY * 1200 / 800, SZY});
     }
 
     void uiAllBind()

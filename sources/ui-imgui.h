@@ -31,6 +31,8 @@ namespace uii
         }
     };
 
+    struct Clear{};
+
     ///-------------------------------------------------------------------------
     /// UI
     ///--------------------------------------------------------------------- UI:
@@ -53,6 +55,11 @@ namespace uii
 
         UITest& operator<<(std::string_view s)
         {   log += s;
+            return *this;
+        }
+
+        UITest& operator<<(const Clear)
+        {   log.clear();
             return *this;
         }
 
@@ -112,6 +119,13 @@ namespace uii
 
             if(ImGui::Button("Exit", {100,40}))
             {   window.close();
+            }
+
+            ImGui::SameLine ();
+
+            if(ImGui::Button("UpdLog", {100,40}))
+            {   /// TODO ...
+                (*this) << "/// TODO ...\n";
             }
 
             for(const auto& t : textFields) t.prn();

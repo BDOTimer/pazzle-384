@@ -63,6 +63,10 @@ struct  DrawImage : sf::Drawable
             arrangeSprites(30.f);
         }
 
+    sf::Vector2u getSize() const
+    {   return SZ;
+    }
+
     void mixer(float gap = 0.f)
     {
         for(unsigned n = 0; n < spp.size(); ++n)
@@ -82,16 +86,25 @@ struct  DrawImage : sf::Drawable
 
 private:
     sf::Vector2u                   WH;
+    sf::Vector2u                   SZ;
     std::vector<TaskImage>&    images;
     std::vector<sf::Texture> textures;
     std::vector<sf::Sprite>        sp;
     std::vector<sf::Sprite*>      spp;
+
+    void calcSize  (float gap)
+    {   SZ   = images.front().getSize();
+        SZ.x = SZ.x * WH.x + (WH.x - 1) * gap;
+        SZ.y = SZ.y * WH.y + (WH.y - 1) * gap;
+    }
 
     ///--------------------------------------|
     /// Расстановка спрайтов на экране.      |
     ///--------------------------------------:
     void arrangeSprites(float gap = 0.0f)
     {
+        calcSize(gap);
+
         const unsigned& SIDEx  = images.front().getSize().x + gap;
         const unsigned& SIDEy  = images.front().getSize().y + gap;
         const unsigned  SIDE2x = SIDEx / 2;
