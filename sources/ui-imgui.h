@@ -85,6 +85,9 @@ namespace uii
 
         float        f{};
 
+        ///--------------------------------------|
+        /// initImgui                            |
+        ///--------------------------------------:
         void initImgui()
         {   bool
             isGood = ImGui::SFML::Init(window);
@@ -109,6 +112,9 @@ namespace uii
             ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImColor(35,35,35,190);
         }
 
+        ///--------------------------------------|
+        /// Hello, Informer!                     |
+        ///--------------------------------------:
         void drawImgui()
         {
             static ImGuiDemoWindowData isShow;
@@ -132,7 +138,7 @@ namespace uii
                          );
 
 
-            ShowDemoWindowMenuBar(&isShow);
+            InformerMenuBar(isShow);
 
             if(ImGui::Button("Demo", {100,40}))
             {   isDemo = !isDemo;
@@ -179,26 +185,29 @@ namespace uii
             */
         }
 
-        static void ShowDemoWindowMenuBar(ImGuiDemoWindowData* isShow)
+        ///--------------------------------------|
+        /// initImgui                            |
+        ///--------------------------------------:
+        static void InformerMenuBar(ImGuiDemoWindowData& isShow)
         {   if (ImGui::BeginMenuBar())
             {   if (ImGui::BeginMenu("Menu"))
-                {   ImGui::MenuItem("Item1", NULL, &isShow->MainMenuBar);
-                    ImGui::MenuItem("Item2", NULL, &isShow->MainMenuBar);
+                {   ImGui::MenuItem("Item1", NULL, &isShow.MainMenuBar);
+                    ImGui::MenuItem("Item2", NULL, &isShow.MainMenuBar);
                     ImGui::SeparatorText("-----");
-                    ImGui::MenuItem("Item3", NULL, &isShow->MainMenuBar);
-                    ImGui::MenuItem("Item4", NULL, &isShow->MainMenuBar);
+                    ImGui::MenuItem("Item3", NULL, &isShow.MainMenuBar);
+                    ImGui::MenuItem("Item4", NULL, &isShow.MainMenuBar);
                     ImGui::EndMenu();
                 }
 
                 if (ImGui::BeginMenu("Tools"))
-                {   ImGui::MenuItem("Item5", NULL, &isShow->MainMenuBar);
-                    ImGui::MenuItem("Item6", NULL, &isShow->MainMenuBar);
+                {   ImGui::MenuItem("Item5", NULL, &isShow.MainMenuBar);
+                    ImGui::MenuItem("Item6", NULL, &isShow.MainMenuBar);
                     ImGui::EndMenu();
                 }
 
                 if (ImGui::BeginMenu("?"))
-                {   ImGui::MenuItem("Help" , NULL, &isShow->Help );
-                    ImGui::MenuItem("About", NULL, &isShow->About);
+                {   ImGui::MenuItem("Help" , NULL, &isShow.Help );
+                    ImGui::MenuItem("About", NULL, &isShow.About);
                     ImGui::EndMenu();
                 }
 
