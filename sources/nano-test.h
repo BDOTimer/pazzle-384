@@ -4,15 +4,30 @@
 ///-----------------------------------------------------------------------------
 /// ...
 ///----------------------------------------------------------------------------:
-#include "debug.h"
+#include <filesystem> /// C++17
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <memory>
+#include <format>  /// C++20
+#include <vector>
+#include <string>
+#include <cmath>
+#include <list>
+#include <map>
+#include <set>
 
-namespace myl2
+#include <SFML/Graphics.hpp>
+
+namespace ntest
 {
     ///--------------------------------------|
     /// Карманный рендер, чтобы увидеть obj. |
     ///--------------------------------------:
-    #undef  SHOW
-    #define SHOW(a) myl2::show(a, #a)
+    #define RENDER(a) ntest::show(a, #a)
 
     template<class T> void show(const T& obj, std::string_view _titul)
     {   std::string titul = std::format("myl::show({})", _titul);
@@ -20,8 +35,8 @@ namespace myl2
                          window.setFramerateLimit  (50);
 
         sf::View camW  = window.getView();
-                 camW.setCenter({0,0});
-                 window.setView(camW);
+                 camW.setCenter   ({0,0});
+                 window.setView   (camW );
 
         while (window.isOpen())
         {
@@ -55,8 +70,9 @@ struct  NanoTest
         sf::RectangleShape shape;
                            shape.setTexture(&t);
                            shape.setSize({150,150});
-        SHOW(shape);
+        RENDER(shape);
     }
 };
 
+#undef RENDER
 #endif // NANOTEST_H

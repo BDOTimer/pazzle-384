@@ -38,7 +38,7 @@ struct  Render
                  ,  drawTexture(images)
                  ,  task384    (images)
         {
-            window.setFramerateLimit(50);
+            window.setFramerateLimit(60);
 
             camUI = window.getView();
 
@@ -60,7 +60,7 @@ struct  Render
 
             uiAllBind();
 
-            //test_01();
+        /// test_01();
 
             loop();
         }
@@ -111,8 +111,8 @@ struct  Render
 
         float        timeMixer = 0.1f;
         float elapsedTimeMixer = 0.0f;
-        bool done = false;
-        bool fast = false;
+        bool  done = false;
+        bool  fast = false;
 
         sf::Vector2i        mouse_pos;
 
@@ -147,7 +147,7 @@ struct  Render
                     {
                         case sf::Keyboard::Scancode::C:
                         {   pImg->mixer(20.f);
-                            updCamera(*pImg);
+                            updCamera (*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::F:
@@ -156,7 +156,6 @@ struct  Render
                         }
                         case sf::Keyboard::Scancode::Num0:
                         {   pImg->set2Start(3);
-                            updCamera(*pImg);
                             done = false;
                             break;
                         }
@@ -182,7 +181,7 @@ struct  Render
                         {
                             pVImg[1] = getDrawImage(ptrDrawImage);
                             pImg     = pVImg[1];
-                            pImg->mixer();
+                            pImg->mixer(20.f);
                             updCamera(*pImg);
                             break;
                         }
@@ -291,6 +290,7 @@ void tests()
 ///
 std::unique_ptr<Render> run(new Render);
 }
+
 
 ///----------------------------------------------------------------------------|
 /// Start.

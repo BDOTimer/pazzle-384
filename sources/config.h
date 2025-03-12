@@ -43,7 +43,7 @@ struct  Config
     ///--------------------------------------|
     /// Уважайте ваш код! :)                 |
     ///--------------------------------------:
-    inline static constexpr char VERSION[]{"Pazzle384-ver:0.0.5.3"};
+    inline static constexpr char VERSION[]{"Pazzle384-ver:0.0.5.4"};
 
     std::string getVersion() const
     {   std::string name {VERSION};

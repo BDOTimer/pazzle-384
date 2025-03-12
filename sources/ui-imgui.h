@@ -16,9 +16,14 @@
 ///---------:
 namespace uii
 {
+    struct ImGuiDemoWindowData
+    {   bool MainMenuBar = false;
+        bool Help        = false;
+        bool About       = false;
+    };
+
     struct  TextField
-    {
-        std::string_view name;
+    {   std::string_view name;
         std::string*        s;
 
         void bind(std::string_view nm, std::string* str)
@@ -31,26 +36,31 @@ namespace uii
         }
     };
 
-    struct Clear{};
+    struct Clear {};
 
     ///-------------------------------------------------------------------------
     /// UI
     ///--------------------------------------------------------------------- UI:
     struct  UITest
-    {       UITest() = delete;
-            UITest(sf::RenderWindow& w) : window(w)
-            {   initImgui();
-                log.reserve(0xFFFFF);
-            }
+    {   UITest() = delete;
+        UITest(sf::RenderWindow& w) : window(w)
+        {   initImgui();
+            log.reserve(0xFFFFF);
+        }
 
         void add(const TextField& tf)
-        {   textFields.push_back(tf);
+        {   textFields.push_back (tf);
         }
 
         void go()
         {   if(isDemo) ImGui::ShowDemoWindow();
 
             drawImgui();
+        }
+
+        UITest& operator<<(const int n)
+        {   log += std::to_string   (n);
+            return *this;
         }
 
         UITest& operator<<(std::string_view s)
@@ -64,9 +74,9 @@ namespace uii
         }
 
     private:
-        sf::RenderWindow& window;
-        bool              isDemo{false};
-        std::list<TextField> textFields;
+        sf::RenderWindow&    window       ;
+        bool                 isDemo{false};
+        std::list<TextField> textFields   ;
 
         std::string  str {"...пусто..."};
         std::string  log ;
@@ -100,16 +110,29 @@ namespace uii
         }
 
         void drawImgui()
-        {   /// ImGui::SetNextWindowSize({500,500});
+        {
+            static ImGuiDemoWindowData isShow;
+            if (isShow.About)
+            {
+                ImGui::Begin("About", nullptr, ImGuiWindowFlags_NoCollapse);
+                ImGui::Text ("%s", "Puzzle-2025");
+                ImGui::End  ();
+            }
+
+        /// ImGui::SetNextWindowSize({500,500});
             ImGui::Begin ("Hello, Informer!",
                             nullptr,
                             ImGuiWindowFlags_NoCollapse
-                            |  ImGuiWindowFlags_HorizontalScrollbar
-                            |  ImGuiWindowFlags_AlwaysVerticalScrollbar
-                        /// |  ImGuiWindowFlags_NoBackground
-                        /// |  ImGuiWindowFlags_NoResize
-                        /// |  ImGuiWindowFlags_AlwaysAutoResize
+                          | ImGuiWindowFlags_HorizontalScrollbar
+                          | ImGuiWindowFlags_AlwaysVerticalScrollbar
+                          | ImGuiWindowFlags_MenuBar
+                      /// | ImGuiWindowFlags_NoBackground
+                      /// | ImGuiWindowFlags_NoResize
+                      /// | ImGuiWindowFlags_AlwaysAutoResize
                          );
+
+
+            ShowDemoWindowMenuBar(&isShow);
 
             if(ImGui::Button("Demo", {100,40}))
             {   isDemo = !isDemo;
@@ -130,12 +153,17 @@ namespace uii
 
             for(const auto& t : textFields) t.prn();
 
-            ImGui::InputText( "InputText", &str, sizeof str);
+            if (isShow.Help && ImGui::CollapsingHeader("Help..."))
+            {   ImGui::Text("%s", help.c_str());
+            }
+
+            ImGui::InputText("InputText", &str, sizeof str);
 
             ImGui::DragFloat("float##3a", &f);
 
-            ImGui::Text("%s", help.c_str());
-            ImGui::Text("%s", log .c_str());
+            if (ImGui::CollapsingHeader("Log..."))
+            {   ImGui::Text("%s", log .c_str());
+            }
 
             //ImGui::PushItemWidth(10);
             //ImGui::Text("%s", igHelp.c_str());
@@ -149,6 +177,33 @@ namespace uii
             ImGui::Text("%s", igHelp.c_str());
             ImGui::EndTooltip              ();
             */
+        }
+
+        static void ShowDemoWindowMenuBar(ImGuiDemoWindowData* isShow)
+        {   if (ImGui::BeginMenuBar())
+            {   if (ImGui::BeginMenu("Menu"))
+                {   ImGui::MenuItem("Item1", NULL, &isShow->MainMenuBar);
+                    ImGui::MenuItem("Item2", NULL, &isShow->MainMenuBar);
+                    ImGui::SeparatorText("-----");
+                    ImGui::MenuItem("Item3", NULL, &isShow->MainMenuBar);
+                    ImGui::MenuItem("Item4", NULL, &isShow->MainMenuBar);
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("Tools"))
+                {   ImGui::MenuItem("Item5", NULL, &isShow->MainMenuBar);
+                    ImGui::MenuItem("Item6", NULL, &isShow->MainMenuBar);
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("?"))
+                {   ImGui::MenuItem("Help" , NULL, &isShow->Help );
+                    ImGui::MenuItem("About", NULL, &isShow->About);
+                    ImGui::EndMenu();
+                }
+
+                ImGui::EndMenuBar();
+            }
         }
     };
 };
