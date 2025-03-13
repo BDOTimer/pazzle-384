@@ -11,7 +11,7 @@
 				<Option working_dir="../bin/" />
 				<Option object_output="obj/" />
 				<Option type="1" />
-				<Option compiler="gcc-14-ucrt-64" />
+				<Option compiler="mingw_gcc_142-ucrt" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++17" />

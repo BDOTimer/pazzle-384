@@ -74,6 +74,8 @@ namespace tools
     {   return TaskImage::img2Txtr (*this);
     }
 
+    sf::Vector2u getSizeImgSource() const { return imgSource.getSize(); }
+
     private:
         sf::Image imgSource;
 

@@ -116,13 +116,10 @@ struct  Render
 
         sf::Vector2i        mouse_pos;
 
-        std::unique_ptr<DrawImage> ptrDrawImage;
+        std::unique_ptr<DrawImage> ptrDrawImage
+            = std::make_unique<DrawImage>(manegerCutterImage.getNext());
 
-        std::vector<DrawImage*> pVImg
-        {   &drawTexture,
-            getDrawImage(ptrDrawImage)
-        };
-        DrawImage* pImg = pVImg[0];
+        DrawImage* pImg = &drawTexture;
 
         updCamera(*pImg);
 
@@ -157,16 +154,24 @@ struct  Render
                         case sf::Keyboard::Scancode::Num0:
                         {   pImg->set2Start(3);
                             done = false;
+                            ui << uii::Clear{} << Task384Mix::info(*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::Num1:
                         {   done = !done;
                             break;
                         }
-                        case sf::Keyboard::Scancode::Enter:
-                        {   static unsigned i = 0;
-                            pImg = pVImg   [i = myl::geti(i, pVImg.size())];
+                        case sf::Keyboard::Scancode::Num2:
+                        {              pImg = ptrDrawImage.get();
+                                       pImg->mixer(20.f);
                             updCamera(*pImg);
+                            ui << uii::Clear{} << task384.info(*pImg);
+                            break;
+                        }
+                        case sf::Keyboard::Scancode::Num3:
+                        {              pImg = &drawTexture;
+                            updCamera(*pImg);
+                            ui << uii::Clear{} << task384.info(*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::W:
@@ -178,11 +183,11 @@ struct  Render
                             break;
                         }
                         case sf::Keyboard::Scancode::N:
-                        {
-                            pVImg[1] = getDrawImage(ptrDrawImage);
-                            pImg     = pVImg[1];
-                            pImg->mixer(20.f);
+                        {              pImg = getDrawImage(ptrDrawImage);
+                                       pImg->mixer(20.f);
                             updCamera(*pImg);
+                        /// ui << uii::Clear{} << Task384   ::info(*pImg);
+                            ui << uii::Clear{} << Task384Mix::info(*pImg);
                             break;
                         }
                         default:;

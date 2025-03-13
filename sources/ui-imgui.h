@@ -42,11 +42,11 @@ namespace uii
     /// UI
     ///--------------------------------------------------------------------- UI:
     struct  UITest
-    {   UITest() = delete;
-        UITest(sf::RenderWindow& w) : window(w)
-        {   initImgui();
-            log.reserve(0xFFFFF);
-        }
+    {       UITest() = delete;
+            UITest(sf::RenderWindow& w) : window(w)
+            {   initImgui();
+                log.reserve(0xFFFFF);
+            }
 
         void add(const TextField& tf)
         {   textFields.push_back (tf);
@@ -81,7 +81,7 @@ namespace uii
         std::string  str {"...пусто..."};
         std::string  log ;
         std::string  help{"KEYBOARD:\n"
-                          "  W.S,1,0,C,F,N,Enter\n "};
+                          "  W.S,1,2,3,0,C,F,N\n "};
 
         float        f{};
 

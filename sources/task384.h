@@ -4,9 +4,9 @@
 ///-----------------------------------------------------------------------------
 /// ...
 ///----------------------------------------------------------------------------:
-
-#include <SFML/Graphics.hpp>
+#include "myl.h"
 #include "images.h"
+#include "cutter-img.h"
 
 
 ///-----------------------------------------------------------------------------
@@ -108,19 +108,71 @@ struct  _2Sides
 /// Task384.
 ///-------------------------------------------------------------------- Task384:
 struct  Task384 : std::vector<TaskImage const*>
-{       Task384(const LoaderImages& imgs)
-        {   reserve(imgs.size());
-            for(const auto& e : imgs) push_back(&e);
-            m.reserve(calcElem(size()));
-
-            go();
-
-            ln(front()->getSize())
-
-            auto result = std::format("Всего расчитанны оценки для {} пар.\n"
-                                     , m.size());
-            ln(result)
+{       Task384 (    ){}
+        Task384 (const LoaderImages& imgs) : goal("LoaderImages")
+        {   init(imgs);
+            go  (    );
         }
+        Task384(const tools::CutterImage& imgs) : goal("CutterImage")
+        {   init(imgs);
+            go  (    );
+        }
+        Task384(const std::vector<TaskImage>& imgs) : goal("TaskImages")
+        {   init(imgs);
+            go  (    );
+        }
+
+    static std::string info(const DrawImage& imgs)
+    {   Task384 task(imgs.images);
+                task.goal = "DrawImage";
+
+        std::stringstream ss;
+
+        ss << std::format("Резак    WH: [{},{}]\n", imgs.WH.x, imgs.WH.y)
+           << std::format("Пикселей XY: [{},{}]\n", imgs.getSizeImgSource().x,
+                                                    imgs.getSizeImgSource().y);
+        return  ss.str() + task.info();
+    }
+
+    ///--------------------------------------|
+    /// info.                                |
+    ///--------------------------------------:
+    std::string info(unsigned cntMax = unsigned(-1)) const
+    {
+        std::stringstream ss{std::string("goal: ") + goal};
+
+        ss << "\nВсего таких пар: " << sim.size() << '\n';
+
+        unsigned cnt{};
+        for(const auto& e : sim)
+        {
+            ss << "\n///-------------------------------:" << cnt << "\n"
+               << e.debug();
+
+            if(++cnt == cntMax)
+            {   ss << "\n... и т.д..\n\n";
+                break;
+            }
+        }
+        return ss.str();
+    }
+
+private:
+    ///--------------------------------------|
+    /// Склад для пар сторон.                |
+    ///--------------------------------------:
+    std::vector<_2Sides> sim;
+    std::string         goal;
+
+    ///--------------------------------------|
+    /// Готовим к калькуляции.               |
+    ///--------------------------------------:
+    void init(const std::vector<TaskImage>& imgs)
+    {   clear  ();
+        reserve(imgs.size());
+        for(const auto& e : imgs) push_back(&e);
+        sim.reserve(calcElem(size()));
+    }
 
     ///--------------------------------------|
     /// Все пары, какие только есть ...      |
@@ -130,41 +182,15 @@ struct  Task384 : std::vector<TaskImage const*>
         for    (auto a = cbegin(), END = cend() - 1; a != END   ; ++a)
         {   for(auto b = a + 1;                      b != cend(); ++b)
             {
-                m.push_back(_2Sides(*a, *b));
+                sim.push_back(_2Sides(*a, *b));
 
             /// ASSERT((*a)->filename != (*b)->filename)
             }
         }
-        ASSERT(calcElem(size()) == m.size())
+        ASSERT(calcElem(size()) == sim.size())
 
         conv2persent();
     }
-
-    ///--------------------------------------|
-    /// info.                                |
-    ///--------------------------------------:
-    std::string info(unsigned cntMax = unsigned(-1)) const
-    {
-        std::stringstream ss{"Task384: ...\n"};
-
-        unsigned cnt{};
-        for(const auto& e : m)
-        {
-            ss << "\n///-------------------------------:" << cnt << "\n"
-               << e.debug();
-
-            if(++cnt == cntMax) break;
-        }
-
-        ss << "\n...\n\nВсего таких пар: " << m.size() << '\n';
-        return ss.str();
-    }
-
-private:
-    ///--------------------------------------|
-    /// Склад для пар сторон.                |
-    ///--------------------------------------:
-    std::vector<_2Sides> m;
 
     ///--------------------------------------|
     /// Прогноз на кол-во пар.               |
@@ -189,7 +215,7 @@ private:
         const unsigned maxx = calcMaxSimilar(front()->getSize().x);
         const unsigned maxy = calcMaxSimilar(front()->getSize().y);
 
-        for(auto& _2s : m)
+        for(auto& _2s : sim)
         {
             #define S _2s.similarity
 
@@ -214,9 +240,88 @@ private:
         _2Sides _2sides(task384[0], task384[1]);
                 _2sides.debug();
 */
-        ASSERT(calcElem(images.size()) == task384.m.size())
+        ASSERT(calcElem(images.size()) == task384.sim.size())
 
         std::cout << task384.info(20);
+    }
+
+    friend struct Task384Mix;
+};
+
+
+///-----------------------------------------------------------------------------
+/// Task384Mix.
+///----------------------------------------------------------------- Task384Mix:
+struct  Task384Mix : protected Task384
+{       Task384Mix (const DrawImage& imgs)
+        {   this->init(imgs);
+            this->go  (imgs);
+        }
+
+    static std::string info(const DrawImage& imgs)
+    {
+        Task384Mix task(imgs);
+                   task.goal = "DrawImageMix";
+
+        std::stringstream ss;
+
+        ss << std::format("Резак    WH: [{},{}]\n", imgs.WH.x, imgs.WH.y)
+           << std::format("Пикселей XY: [{},{}]\n", imgs.getSizeImgSource().x,
+                                                    imgs.getSizeImgSource().y);
+        return  ss.str() + task.info();
+    }
+
+    ///--------------------------------------|
+    /// info.                                |
+    ///--------------------------------------:
+    std::string info(unsigned cntMax = unsigned(-1)) const
+    {   return Task384::info(cntMax);
+    }
+
+private:
+    void init(const DrawImage& imgs)
+    {   clear();
+        reserve(imgs.images .size());
+        for(const auto& p : imgs.spp) push_back(&imgs.images[p->id]);
+        sim.reserve(calcElem(size()));
+
+        ASSERT(size() == imgs.images .size())
+    }
+
+    ///--------------------------------------|
+    /// Только соседние пары.                |
+    ///--------------------------------------:
+    void go(const DrawImage& imgs)
+    {
+        const auto X = imgs.WH.x;
+        const auto Y = imgs.WH.y;
+
+        const std::vector<TaskImage const*>& V = *this;
+
+        for    (unsigned y{};             y < Y ; ++y)
+        {   for(unsigned x{}, XX = X - 1; x < XX; ++x)
+            {
+                const unsigned i = y * X + x;
+
+                sim.push_back(_2Sides(V[i], V[i + 1]));
+            }
+        }
+
+        for    (unsigned x{};             x < X ; ++x)
+        {   for(unsigned y{}, YY = Y - 1; y < YY; ++y)
+            {
+                const unsigned i = y * X + x;
+
+                sim.push_back(_2Sides(V[i], V[i + X]));
+            }
+        }
+
+        l(sim.size())
+        l((X - 1) * Y + (Y - 1) * X)
+
+        ASSERT(sim.size() == (X - 1) * Y + (Y - 1) * X);
+
+        conv2persent();
     }
 };
 

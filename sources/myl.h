@@ -79,6 +79,18 @@ namespace myl
     inline unsigned geti(unsigned i, unsigned N)
     {   ++i; if(i == N) {i = 0;} return i;
     }
+
+    ///--------------------------------------|
+    /// Спрайт помнящий свой индекс.         |
+    ///--------------------------------------:
+    struct  Sprite : sf::Sprite
+    {       Sprite(const sf::Texture& t) : sf::Sprite(t)
+            {
+            }
+
+        std::string_view filename;
+        unsigned         id {unsigned(-1)};
+    };
 }
 
 #endif // MYL_H

@@ -53,7 +53,12 @@ struct  DrawImage : sf::Drawable
             init              ();
             arrangeSprites(30.f);
 
-            l(myl::getN4Size (myl::getVSizeWH(images.size()).front()))
+            ASSERT(!images.empty())
+
+            sz = { WH.x * images.front().getSize().x ,
+                   WH.y * images.front().getSize().y };
+
+            l(myl::getN4Size (myl::getVSizeWH(images.size()).front())) /////////
         }
         DrawImage(tools::CutterImage& _images )
             :     images            ( _images )
@@ -61,11 +66,17 @@ struct  DrawImage : sf::Drawable
             WH = myl::getVSizeWH(images.size()).front();
             init              ();
             arrangeSprites(30.f);
+
+            ASSERT(!images.empty())
+
+            sz = _images.getSizeImgSource();
         }
 
     sf::Vector2u getSize() const
     {   return SZ;
     }
+
+    const sf::Vector2u& getSizeImgSource() const { return sz; }
 
     void mixer(float gap = 0.f)
     {
@@ -85,12 +96,13 @@ struct  DrawImage : sf::Drawable
     }
 
 private:
-    sf::Vector2u                   WH;
-    sf::Vector2u                   SZ;
+    sf::Vector2u                   WH; /// Размер в разрезанных images.
+    sf::Vector2u                   sz; /// Размер base image в пикселях.
+    sf::Vector2u                   SZ; /// Размер base image в пикселях + gap.
     std::vector<TaskImage>&    images;
     std::vector<sf::Texture> textures;
-    std::vector<sf::Sprite>        sp;
-    std::vector<sf::Sprite*>      spp;
+    std::vector<myl::Sprite>       sp;
+    std::vector<myl::Sprite*>     spp;
 
     void calcSize  (float gap)
     {   SZ   = images.front().getSize();
@@ -136,11 +148,14 @@ private:
 
             for(unsigned i = 0; i < spp.size(); ++i)
             {
-                sp.emplace_back(sf::Sprite(textures[i]));
+                sp.emplace_back(myl::Sprite(textures[i]));
                 sp.back().setOrigin ({(float)images.front().getSize().x / 2,
                                       (float)images.front().getSize().y / 2});
 
                 spp[i] = &sp.back();
+
+                sp.back().id       = i;
+                sp.back().filename = images[i].filename;
             }
         }
     }
@@ -162,6 +177,9 @@ private:
         DrawImage drawImage(loaderImages);
         SHOW(drawImage);
     }
+
+    friend struct Task384;
+    friend struct Task384Mix;
 };
 
 #endif // IMAGES_H

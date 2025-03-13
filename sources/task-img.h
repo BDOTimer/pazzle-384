@@ -79,8 +79,7 @@ struct  TaskImage : myImage
         for(const auto& img : imgs)
         {   tt.emplace_back(sf::Texture());
             if(!tt.back().loadFromImage(img))
-            {
-                /// TODO ... loading was fail ...
+            {   ASSERTM(false, "loadFromImage(.) is failed ...")
             }
         }
         return tt;
