@@ -133,13 +133,14 @@ struct  Render
 
                 if(event->is<sf::Event::Closed>()) window.close();
 
-                if(ImGui::IsAnyItemActive()) break;
+            /// if(ImGui::IsAnyItemActive()) break;
             /// if(ImGui::IsWindowFocused()) break;
+            /// if(ui.isAnyFocused         ) break;
 
                 if (const auto* keyPressed = event->getIf<E::KeyPressed>())
                 {
                     /// ...
-
+                    if(!ui.isAnyFocused        )
                     switch(keyPressed->scancode)
                     {
                         case sf::Keyboard::Scancode::C:

@@ -73,6 +73,8 @@ namespace uii
             return *this;
         }
 
+        bool isAnyFocused{false};
+
     private:
         sf::RenderWindow&    window       ;
         bool                 isDemo{false};
@@ -137,6 +139,7 @@ namespace uii
                       /// | ImGuiWindowFlags_AlwaysAutoResize
                          );
 
+            isAnyFocused = ImGui::IsWindowFocused();
 
             InformerMenuBar(isShow);
 
@@ -158,6 +161,8 @@ namespace uii
             }
 
             for(const auto& t : textFields) t.prn();
+
+            ImGui::Text ("isAnyFocused : %d", isAnyFocused);/////////////////////
 
             if (isShow.Help && ImGui::CollapsingHeader("Help..."))
             {   ImGui::Text("%s", help.c_str());

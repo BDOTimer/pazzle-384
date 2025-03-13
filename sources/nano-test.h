@@ -4,6 +4,10 @@
 ///-----------------------------------------------------------------------------
 /// ...
 ///----------------------------------------------------------------------------:
+#include "imgui.h"
+#include "imgui-SFML.h"
+#include "misc/cpp/imgui_stdlib.h"
+
 #include <filesystem> /// C++17
 #include <algorithm>
 #include <iostream>
@@ -38,16 +42,37 @@ namespace ntest
                  camW.setCenter   ({0,0});
                  window.setView   (camW );
 
+        if(!ImGui::SFML::Init(window))
+        {   /// ...
+        }
+
+        sf::Clock deltaClock;
+
         while (window.isOpen())
         {
             while (const std::optional event = window.pollEvent() )
-            {   if(event->is<sf::Event::Closed>()) window.close();
+            {
+                ImGui::SFML::ProcessEvent(window, *event);
+
+                if(event->is<sf::Event::Closed>()) window.close();
 
             }
+
+            ImGui::SFML::Update(window, deltaClock.restart());
+
+            ImGui::ShowDemoWindow();
+
+            ImGui::Begin("Hello, world!");
+            ImGui::Button("Look at this pretty button");
+            ImGui::End();
+
             window.clear  ();
             window.draw(obj);
+
+            ImGui::SFML::Render(window);
             window.display();
         }
+        ImGui::SFML::Shutdown();
     }
 }
 
@@ -62,8 +87,7 @@ struct  NanoTest
     static void test()
     {
         sf::Texture t;
-                if(!t.loadFromFile("C:\\!CB-2025\\Projects\\CForum\\house.png",
-                                   false, sf::IntRect({ 10, 10 }, { 32, 32 })))
+                if(!t.loadFromFile("img/img  _50.jpg"))
                 {
                 }
 
