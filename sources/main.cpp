@@ -203,6 +203,12 @@ struct  Render
                 {   mouse_pos  =  sf::Mouse::getPosition(window);
                     process_mouse(mouse_pos);
                 }
+
+                if ([[maybe_unused]]const auto* resized
+                    = event->getIf<sf::Event::Resized>())
+                {
+                    updCamera(*pImg);
+                }
             }
 
             ///----------------------|
@@ -250,10 +256,16 @@ struct  Render
     }
 
     void updCamera(const DrawImage& gi)
-    {   const float& SZX =  gi.getSize().x;
-        const float& SZY =  gi.getSize().y;
-        if(SZX > SZY) camWorld.setSize({SZX, SZX * 800 / 1200});
-        else          camWorld.setSize({SZY * 1200 / 800, SZY});
+    {   const float&  SZX = gi.getSize().x;
+        const float&  SZY = gi.getSize().y;
+        const float   KG  = SZX / SZY;
+
+        const unsigned& W = window.getSize().x;
+        const unsigned& H = window.getSize().y;
+        const float    KW = (float)W / H;
+
+        KG > KW ? camWorld.setSize({ SZX        , SZX * H / W }) :
+                  camWorld.setSize({ SZY * W / H, SZY         }) ;
     }
 
     void uiAllBind()
