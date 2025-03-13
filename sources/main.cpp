@@ -33,10 +33,10 @@ struct  HeroTest : sf::RectangleShape
 struct  Render
 {       Render() :  window(sf::VideoMode({1200, 800})
                  ,  Config::get().getVersion())
-                 ,  ui         (window)
-                 ,  text       (font  )
-                 ,  drawTexture(images)
-                 ,  task384    (images)
+                 ,  ui            (window)
+                 ,  text          (font  )
+                 ,  drawLoadImages(images)
+                 ,  task384       (images)
         {
             window.setFramerateLimit(60);
 
@@ -65,29 +65,29 @@ struct  Render
             loop();
         }
 
-    ///--------------------|
-    /// Главное Окно.      |
-    ///--------------------:
-    sf::RenderWindow window;
+    ///---------------------|
+    /// Главное Окно.       |
+    ///---------------------:
+    sf::RenderWindow  window;
 
-    ///--------------------|
-    /// Gui.               |
-    ///--------------------:
-    uii::UITest          ui;
+    ///---------------------|
+    /// Gui.                |
+    ///---------------------:
+    uii::UITest           ui;
 
-    sf::Font           font;
-    sf::Text           text;
-    HeroTest           hero;
+    sf::Font            font;
+    sf::Text            text;
+    HeroTest            hero;
 
-    ///--------------------|
-    /// Камеры вида.       |
-    ///--------------------:
-    sf::View          camUI;
-    sf::View       camWorld;
+    ///---------------------|
+    /// Камеры вида.        |
+    ///---------------------:
+    sf::View           camUI;
+    sf::View        camWorld;
 
-    LoaderImages     images;
-    DrawImage   drawTexture;
-    Task384         task384;
+    LoaderImages      images;
+    DrawImage drawLoadImages;
+    Task384          task384;
 
     ///-----------------------------------------|
     /// Буфер для всех ТЕСТОВЫХ img.            |
@@ -119,7 +119,7 @@ struct  Render
         std::unique_ptr<DrawImage> ptrDrawImage
             = std::make_unique<DrawImage>(manegerCutterImage.getNext());
 
-        DrawImage* pImg = &drawTexture;
+        DrawImage* pImg = &drawLoadImages;
 
         updCamera(*pImg);
 
@@ -166,11 +166,12 @@ struct  Render
                         {              pImg = ptrDrawImage.get();
                                        pImg->mixer(20.f);
                             updCamera(*pImg);
-                            ui << uii::Clear{} << task384.info(*pImg);
+                        /// ui << uii::Clear{} << task384    .info(*pImg);
+                            ui << uii::Clear{} << Task384Mix::info(*pImg);
                             break;
                         }
                         case sf::Keyboard::Scancode::Num3:
-                        {              pImg = &drawTexture;
+                        {              pImg = &drawLoadImages;
                             updCamera(*pImg);
                             ui << uii::Clear{} << task384.info(*pImg);
                             break;

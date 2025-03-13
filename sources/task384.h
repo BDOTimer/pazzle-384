@@ -139,9 +139,10 @@ struct  Task384 : std::vector<TaskImage const*>
     ///--------------------------------------:
     std::string info(unsigned cntMax = unsigned(-1)) const
     {
-        std::stringstream ss{std::string("goal: ") + goal};
+        std::stringstream ss;
 
-        ss << "\nВсего таких пар: " << sim.size() << '\n';
+        ss << "Тип цели: " << goal
+           << "\nВсего таких пар: " << sim.size() << '\n';
 
         unsigned cnt{};
         for(const auto& e : sim)
@@ -263,7 +264,7 @@ struct  Task384Mix : protected Task384
         Task384Mix task(imgs);
                    task.goal = "DrawImageMix";
 
-        std::stringstream ss;
+        std::stringstream ss{};
 
         ss << std::format("Резак    WH: [{},{}]\n", imgs.WH.x, imgs.WH.y)
            << std::format("Пикселей XY: [{},{}]\n", imgs.getSizeImgSource().x,
@@ -315,9 +316,6 @@ private:
                 sim.push_back(_2Sides(V[i], V[i + X]));
             }
         }
-
-        l(sim.size())
-        l((X - 1) * Y + (Y - 1) * X)
 
         ASSERT(sim.size() == (X - 1) * Y + (Y - 1) * X);
 
