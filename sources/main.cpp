@@ -226,7 +226,7 @@ struct  Render
             /// ImGui::SFML.         |
             ///----------------------:
             ImGui::SFML::Update(window, delta);
-            ui.go();
+            ui.show();
 
             window.clear   ({0, 30, 60});
 

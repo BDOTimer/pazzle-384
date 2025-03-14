@@ -1,7 +1,7 @@
 ﻿#ifndef UI_IMGUI_H
 #define UI_IMGUI_H
 /// "ui-imgui.h"
-///-----------------------------------------------------------------------------
+///----------------------------------------------------------------------------|
 /// ...
 ///----------------------------------------------------------------------------:
 
@@ -20,6 +20,8 @@ namespace uii
     {   bool MainMenuBar = false;
         bool Help        = false;
         bool About       = false;
+        bool Demo        = false;
+        bool Log         = false;
     };
 
     struct  TextField
@@ -38,7 +40,7 @@ namespace uii
 
     struct Clear {};
 
-    ///-------------------------------------------------------------------------
+    ///------------------------------------------------------------------------|
     /// UI
     ///--------------------------------------------------------------------- UI:
     struct  UITest
@@ -52,10 +54,19 @@ namespace uii
         {   textFields.push_back (tf);
         }
 
-        void go()
-        {   if(isDemo) ImGui::ShowDemoWindow();
+        void show()
+        {
+            auto& color = ImGui::GetStyle().Colors[ImGuiCol_WindowBg];
 
-            drawImgui();
+            color = ImColor(0.f, 0.1f, 0.f, 255.0f);
+            if (isShow.About) showAbout();
+
+            color = ImColor(0.f, 0.f, 0.4f, 0.8f);
+            if (isShow.Log  ) showLog           (log);
+            if (isShow.Demo ) ImGui::ShowDemoWindow();
+
+            color = ImColor(35,35,35,190);
+            showMain();
         }
 
         UITest& operator<<(const int n)
@@ -77,7 +88,6 @@ namespace uii
 
     private:
         sf::RenderWindow&    window       ;
-        bool                 isDemo{false};
         std::list<TextField> textFields   ;
 
         std::string  str {"...пусто..."};
@@ -86,6 +96,8 @@ namespace uii
                           "  W.S,1,2,3,0,C,F,N\n "};
 
         float        f{};
+
+        ImGuiDemoWindowData isShow;
 
         ///--------------------------------------|
         /// initImgui                            |
@@ -110,22 +122,13 @@ namespace uii
             if (!isGood)
             {   ASSERTM(false, "ImGui::SFML::UpdateFontTexture()is failed ...")
             }
-
-            ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImColor(35,35,35,190);
         }
 
         ///--------------------------------------|
         /// Hello, Informer!                     |
         ///--------------------------------------:
-        void drawImgui()
+        void showMain()
         {
-            static ImGuiDemoWindowData isShow;
-            if (isShow.About)
-            {
-                ImGui::Begin("About", nullptr, ImGuiWindowFlags_NoCollapse);
-                ImGui::Text ("%s", "Puzzle-2025");
-                ImGui::End  ();
-            }
 
         /// ImGui::SetNextWindowSize({500,500});
             ImGui::Begin ("Hello, Informer!",
@@ -139,12 +142,22 @@ namespace uii
                       /// | ImGuiWindowFlags_AlwaysAutoResize
                          );
 
-            isAnyFocused = ImGui::IsWindowFocused();
+            isAnyFocused = ImGui::IsAnyItemActive();
+            ///          = ImGui::IsWindowFocused();
 
             InformerMenuBar(isShow);
 
+            ///-------------------------------|
+            /// Батоны.                       |
+            ///-------------------------------:
             if(ImGui::Button("Demo", {100,40}))
-            {   isDemo = !isDemo;
+            {   isShow.Demo = !isShow.Demo;
+            }
+
+            ImGui::SameLine ();
+
+            if(ImGui::Button("Log", {100,40}))
+            {   isShow.Log = !isShow.Log;
             }
 
             ImGui::SameLine ();
@@ -153,16 +166,12 @@ namespace uii
             {   window.close();
             }
 
-            ImGui::SameLine ();
-
-            if(ImGui::Button("UpdLog", {100,40}))
-            {   /// TODO ...
-                (*this) << "/// TODO ...\n";
-            }
-
+            ///-------------------------------|
+            /// Инфо о внешних полях.         |
+            ///-------------------------------:
             for(const auto& t : textFields) t.prn();
 
-            ImGui::Text ("isAnyFocused : %d", isAnyFocused);/////////////////////
+            ImGui::Text ("isAnyFocused : %d", isAnyFocused);////////////////////
 
             if (isShow.Help && ImGui::CollapsingHeader("Help..."))
             {   ImGui::Text("%s", help.c_str());
@@ -218,6 +227,37 @@ namespace uii
 
                 ImGui::EndMenuBar();
             }
+        }
+
+        ///--------------------------------------|
+        /// showAbout.                           |
+        ///--------------------------------------:
+        void showAbout()
+        {
+            const char* const about
+            {   "\n"
+                "\tТема : Puzzle-384\n"
+                "\tФорум: www.cyberforum.ru\n"
+                "\tАвтор: xlat-code\n"
+            };
+
+            ImGui::Begin("About", &isShow.About, ImGuiWindowFlags_NoCollapse);
+            ImGui::Text ("%s", about);
+            ImGui::End  ();
+        }
+
+        ///--------------------------------------|
+        /// showLog.                             |
+        ///--------------------------------------:
+        void showLog(std::string_view str)
+        {
+            ImGui::Begin("Log", &isShow.Log,
+                    ImGuiWindowFlags_NoCollapse
+            /// |   ImGuiWindowFlags_NoBackground
+                |   ImGuiWindowFlags_NoResize
+            );
+            ImGui::Text("%s", str.data());
+            ImGui::End ();
         }
     };
 };
