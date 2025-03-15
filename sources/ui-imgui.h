@@ -16,6 +16,8 @@
 ///---------:
 namespace uii
 {
+    using Callback = std::function<void()>;
+
     struct ImGuiDemoWindowData
     {   bool MainMenuBar = false;
         bool Help        = false;
@@ -48,7 +50,16 @@ namespace uii
             UITest(sf::RenderWindow& w) : window(w)
             {   initImgui();
                 log.reserve(0xFFFFF);
+
+                callbacks.reserve(10);
             }
+
+
+        Callback foo;
+
+        void pushCallback(const std::pair<const char*, Callback> cb)
+        {   callbacks.emplace_back(cb);
+        }
 
         void add(const TextField& tf)
         {   textFields.push_back (tf);
@@ -95,7 +106,7 @@ namespace uii
         std::string  help{"KEYBOARD:\n"
                           "  W.S,1,2,3,0,C,F,N\n "};
 
-        float        f{};
+        float f{};
 
         ImGuiDemoWindowData isShow;
 
@@ -131,9 +142,8 @@ namespace uii
         {
 
         /// ImGui::SetNextWindowSize({500,500});
-            ImGui::Begin ("Hello, Informer!",
-                            nullptr,
-                            ImGuiWindowFlags_NoCollapse
+            ImGui::Begin ("Hello, Informer!", nullptr, 0
+                      ///   ImGuiWindowFlags_NoCollapse
                           | ImGuiWindowFlags_HorizontalScrollbar
                           | ImGuiWindowFlags_AlwaysVerticalScrollbar
                           | ImGuiWindowFlags_MenuBar
@@ -150,21 +160,32 @@ namespace uii
             ///-------------------------------|
             /// Батоны.                       |
             ///-------------------------------:
-            if(ImGui::Button("Demo", {100,40}))
+            const unsigned W = 80;
+            const unsigned H = 30;
+
+            if(ImGui::Button("Demo", {W, H}))
             {   isShow.Demo = !isShow.Demo;
             }
 
             ImGui::SameLine ();
 
-            if(ImGui::Button("Log", {100,40}))
+            if(ImGui::Button("Log", {W, H}))
             {   isShow.Log = !isShow.Log;
             }
 
             ImGui::SameLine ();
 
-            if(ImGui::Button("Exit", {100,40}))
+            if(ImGui::Button("Exit", {W, H}))
             {   window.close();
             }
+
+            ImGui::SameLine ();
+
+            if(ImGui::Button("Test", {W, H}))
+            {   foo();
+            }
+
+            controlButton();
 
             ///-------------------------------|
             /// Инфо о внешних полях.         |
@@ -251,13 +272,42 @@ namespace uii
         ///--------------------------------------:
         void showLog(std::string_view str)
         {
-            ImGui::Begin("Log", &isShow.Log,
-                    ImGuiWindowFlags_NoCollapse
+            ImGui::Begin("Log", &isShow.Log, 0
+            ///     ImGuiWindowFlags_NoCollapse
             /// |   ImGuiWindowFlags_NoBackground
                 |   ImGuiWindowFlags_NoResize
             );
             ImGui::Text("%s", str.data());
             ImGui::End ();
+        }
+
+        std::vector<std::pair<const char*, Callback>> callbacks;
+
+        ///--------------------------------------|
+        /// controlButton.                       |
+        ///--------------------------------------:
+        void controlButton()
+        {
+            const unsigned W = 60;
+            const unsigned H = 25;
+
+            #define SHOWBUTTON if(ImGui::Button(it->first, {W,H})) it->second();
+
+            ImGui::SeparatorText("\nControl Buttons:");
+
+            auto it = callbacks.cbegin();
+
+            for(const auto E = it + 3; it != E; ++it )
+            {   SHOWBUTTON ImGui::SameLine ();
+            }   SHOWBUTTON
+
+            for(const auto E = callbacks.cend() - 1; ++it != E;)
+            {   SHOWBUTTON ImGui::SameLine ();
+            }   SHOWBUTTON
+
+            ImGui::SeparatorText("...");
+
+            #undef SHOWBUTTON
         }
     };
 };

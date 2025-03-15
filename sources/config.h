@@ -56,7 +56,7 @@ struct  Config
     ///--------------------------------------:
     inline static std::string bannerlogo()
     {   Strv a{"///--------------------------------------|"};
-        return std::format("{}\n///      {}     |\n{}\n", a,VERSION,a);
+        return std::format("{}\n///      {}           |\n{}\n", a, VERSION, a);
     }
 
     ///--------------------------------------|

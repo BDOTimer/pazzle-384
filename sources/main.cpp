@@ -85,6 +85,14 @@ struct  Render
     sf::View           camUI;
     sf::View        camWorld;
 
+    ///---------------------|
+    /// Часы.               |
+    ///---------------------:
+    sf::Clock          clock;
+
+    ///---------------------|
+    /// Целевые.            |
+    ///---------------------:
     LoaderImages      images;
     DrawImage drawLoadImages;
     Task384          task384;
@@ -94,8 +102,22 @@ struct  Render
     ///-----------------------------------------:
     tools::ManegerCutterImage manegerCutterImage;
 
-    sf::Clock clock;
+    ///-----------------------------------------|
+    /// Указатель с GC.                         |
+    ///-----------------------------------------:
+    std::unique_ptr<DrawImage>      ptrDrawImage;
 
+    ///-----------------------------------------|
+    /// Текущая отображаемая картинка.          |
+    ///-----------------------------------------:
+    DrawImage*           pImg  = &drawLoadImages;
+
+    bool  done{false};
+    bool  fast{false};
+
+    ///-----------------------------------------|
+    /// Демо-курсор.                            |
+    ///-----------------------------------------:
     std::string MousePosition;
     void process_mouse(const sf::Vector2i& mouse_pos)
     {   std::string    s("XY = [");
@@ -105,21 +127,21 @@ struct  Render
         std::swap(s, MousePosition);
     }
 
+    ///-----------------------------------------|
+    /// Главный цикл.                           |
+    ///-----------------------------------------:
     void loop()
     {
-        ui << uii::Clear{} << task384.info(100);
+        ui << uii::Clear{} << "... press '2' or '3' ..."; /// task384.info(100);
 
         float        timeMixer = 0.1f;
         float elapsedTimeMixer = 0.0f;
-        bool  done = false;
-        bool  fast = false;
 
-        sf::Vector2i        mouse_pos;
+        sf::Vector2i mouse_pos;
 
-        std::unique_ptr<DrawImage> ptrDrawImage
-            = std::make_unique<DrawImage>(manegerCutterImage.getNext());
+        ptrDrawImage = std::make_unique<DrawImage>(manegerCutterImage.getNext());
 
-        DrawImage* pImg = &drawLoadImages;
+        pImg = &drawLoadImages;
 
         updCamera(*pImg);
 
@@ -129,13 +151,10 @@ struct  Render
             {
                 ImGui::SFML::ProcessEvent(window, *event);
 
-                using E = sf::Event;
+                using E   = sf::Event;
+                using KEY = sf::Keyboard::Scancode;
 
                 if(event->is<sf::Event::Closed>()) window.close();
-
-            /// if(ImGui::IsAnyItemActive()) break;
-            /// if(ImGui::IsWindowFocused()) break;
-            /// if(ui.isAnyFocused         ) break;
 
                 if (const auto* keyPressed = event->getIf<E::KeyPressed>())
                 {
@@ -143,55 +162,20 @@ struct  Render
                     if(!ui.isAnyFocused        )
                     switch(keyPressed->scancode)
                     {
-                        case sf::Keyboard::Scancode::C:
+                        case KEY::C:
                         {   pImg->mixer(20.f);
                             updCamera (*pImg);
                             break;
                         }
-                        case sf::Keyboard::Scancode::F:
-                        {   fast = !fast;
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::Num0:
-                        {   pImg->set2Start(3);
-                            done = false;
-                            ui << uii::Clear{} << Task384Mix::info(*pImg);
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::Num1:
-                        {   done = !done;
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::Num2:
-                        {              pImg = ptrDrawImage.get();
-                                       pImg->mixer(20.f);
-                            updCamera(*pImg);
-                        /// ui << uii::Clear{} << task384    .info(*pImg);
-                            ui << uii::Clear{} << Task384Mix::info(*pImg);
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::Num3:
-                        {              pImg = &drawLoadImages;
-                            updCamera(*pImg);
-                            ui << uii::Clear{} << task384.info(*pImg);
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::W:
-                        {   camWorld.zoom(1.05f);
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::S:
-                        {   camWorld.zoom(0.95f);
-                            break;
-                        }
-                        case sf::Keyboard::Scancode::N:
-                        {              pImg = getDrawImage(ptrDrawImage);
-                                       pImg->mixer(20.f);
-                            updCamera(*pImg);
-                        /// ui << uii::Clear{} << Task384   ::info(*pImg);
-                            ui << uii::Clear{} << Task384Mix::info(*pImg);
-                            break;
-                        }
+                        case KEY::F:   { fooKeyF (); break; }
+                        case KEY::Num0:{ fooKey0 (); break; }
+                        case KEY::Num1:{ fooKey1 (); break; }
+                        case KEY::Num2:{ fooKey2 (); break; }
+                        case KEY::Num3:{ fooKey3 (); break; }
+                        case KEY::W   :{ fooZoomN(); break; } /// zoom-
+                        case KEY::S   :{ fooZoomP(); break; } /// zoom+
+                        case KEY::N   :{ fooKeyN (); break; }
+
                         default:;
                     }
                 }
@@ -204,6 +188,9 @@ struct  Render
                     process_mouse(mouse_pos);
                 }
 
+                ///------------------------------------|
+                /// Ресайзинг окна.                    |
+                ///------------------------------------:
                 if ([[maybe_unused]]const auto* resized
                     = event->getIf<sf::Event::Resized>())
                 {
@@ -268,15 +255,66 @@ struct  Render
                   camWorld.setSize({ SZY * W / H, SZY         }) ;
     }
 
+    ///------------------------------------|
+    /// Инициализация гуя.                 |
+    ///------------------------------------:
     void uiAllBind()
     {
         ui.add({"MousePosition", &MousePosition});
+
+        ui.foo = [this](){ l("ui.foo"); };
+
+        ui.pushCallback( {"zoom+", [this](){ fooZoomP(); }} );
+        ui.pushCallback( {"zoom-", [this](){ fooZoomN(); }} );
+        ui.pushCallback( {"Next" , [this](){ fooKeyN (); }} );
+        ui.pushCallback( {"Build", [this](){ fooKey0 (); }} );
+        ui.pushCallback( {"mixer", [this](){ fooKey1 (); }} );
+        ui.pushCallback( {"fast" , [this](){ fooKeyF (); }} );
+        ui.pushCallback( {"test" , [this](){ fooKey2 (); }} );
+        ui.pushCallback( {"Task" , [this](){ fooKey3 (); }} );
+    }
+
+    ///------------------------------------|
+    /// Методы User's управления.          |
+    ///------------------------------------:
+    void fooZoomP(){ camWorld.zoom(0.95f); }
+    void fooZoomN(){ camWorld.zoom(1.05f); }
+    void fooKeyN ()
+    {   pImg = getDrawImage(ptrDrawImage);
+        pImg->mixer(20.f);
+        updCamera(*pImg);
+    /// ui << uii::Clear{} << Task384   ::info(*pImg);
+        ui << uii::Clear{} << Task384Mix::info(*pImg);
+    }
+
+    void fooKey0 ()
+    {   pImg->set2Start(3);
+        done = false;
+        ui  << uii::Clear{} << Task384Mix::info(*pImg);
+    }
+
+    void fooKeyF (){ fast = !fast; }
+    void fooKey1 (){ done = !done; }
+    void fooKey2 ()
+    {              pImg = ptrDrawImage.get();
+                   pImg->mixer(20.f);
+        updCamera(*pImg);
+    /// ui << uii::Clear{} << task384    .info(*pImg);
+        ui << uii::Clear{} << Task384Mix::info(*pImg);
+    }
+
+    void fooKey3 ()
+    {              pImg = &drawLoadImages;
+        updCamera(*pImg);
+        ui << uii::Clear{} << task384.info(*pImg);
     }
 
     void test_01()
     {
         //ImGuiPlatformIO& platformIO = ImGui::GetPlatformIO();
         //ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+        l("test_01()")
     }
 };
 
