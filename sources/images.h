@@ -4,6 +4,7 @@
 ///----------------------------------------------------------------------------|
 /// Загрузка текстуры в память.
 ///----------------------------------------------------------------------------:
+#include "anim-sprite.h"
 #include "files-cargo.h"
 #include "cutter-img.h"
 #include "task-img.h"
@@ -104,7 +105,9 @@ private:
     std::vector<myl::Sprite>       sp;
     std::vector<myl::Sprite*>     spp;
 
-    void calcSize  (float gap)
+    anm::AnimSprite        animSprite;
+
+    void calcSize (float gap)
     {   SZ   = images.front().getSize();
         SZ.x = SZ.x * WH.x + (WH.x - 1) * gap;
         SZ.y = SZ.y * WH.y + (WH.y - 1) * gap;
@@ -158,6 +161,11 @@ private:
                 sp.back().filename = images[i].filename;
             }
         }
+
+        ///--------------------------------------|
+        /// Захват спрайта.                     |
+        ///--------------------------------------:
+        animSprite.bind(spp[0]);
     }
 
     ///--------------------------------------|
@@ -167,6 +175,8 @@ private:
                       sf::RenderStates  states) const
     {
         for(const auto& psprite : spp) target.draw(*psprite);
+
+        target.draw(animSprite);
     }
 
     ///--------------------------------------|

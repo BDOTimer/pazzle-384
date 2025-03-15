@@ -62,6 +62,7 @@
 		<Unit filename="../extlib/imgui-1.91.8/imstb_truetype.h" />
 		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.cpp" />
 		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.h" />
+		<Unit filename="../sources/anim-sprite.h" />
 		<Unit filename="../sources/config.h" />
 		<Unit filename="../sources/cutter-img.h" />
 		<Unit filename="../sources/debug.h" />

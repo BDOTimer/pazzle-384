@@ -78,6 +78,7 @@ struct  Render
     sf::Font            font;
     sf::Text            text;
     HeroTest            hero;
+    anm::Border       border;
 
     ///---------------------|
     /// Камеры вида.        |
