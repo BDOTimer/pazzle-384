@@ -11,7 +11,7 @@
 				<Option working_dir="../bin/" />
 				<Option object_output="obj/" />
 				<Option type="1" />
-				<Option compiler="mingw_gcc_142-ucrt" />
+				<Option compiler="gcc-14-ucrt-64" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++17" />
@@ -21,7 +21,8 @@
 					<Add directory="../extlib/imgui-1.91.8" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add option="SFML_STATIC" />
+					<Add option="-i:icon.rc" />
+					<Add directory="res" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
@@ -62,6 +63,7 @@
 		<Unit filename="../extlib/imgui-1.91.8/imstb_truetype.h" />
 		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.cpp" />
 		<Unit filename="../extlib/imgui-1.91.8/misc/cpp/imgui_stdlib.h" />
+		<Unit filename="../note-dev.txt" />
 		<Unit filename="../sources/anim-sprite.h" />
 		<Unit filename="../sources/config.h" />
 		<Unit filename="../sources/cutter-img.h" />
@@ -75,6 +77,9 @@
 		<Unit filename="../sources/task-img.h" />
 		<Unit filename="../sources/task384.h" />
 		<Unit filename="../sources/ui-imgui.h" />
+		<Unit filename="res/icon.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

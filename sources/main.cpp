@@ -146,8 +146,15 @@ struct  Render
 
         updCamera(*pImg);
 
+        [[maybe_unused]] int cntMouse{0};
+
         while (window.isOpen())
         {
+            ///----------------------|
+            /// cam_world.           |
+            ///----------------------:
+            window.setView(camWorld);
+
             while (const std::optional event = window.pollEvent() )
             {
                 ImGui::SFML::ProcessEvent(window, *event);
@@ -182,7 +189,7 @@ struct  Render
                 }
 
                 ///------------------------------------|
-                /// MouseMoved только здесь.           |
+                /// MouseMoved.                        |
                 ///------------------------------------:
                 if(event->is<sf::Event::MouseMoved>())
                 {   mouse_pos  =  sf::Mouse::getPosition(window);
@@ -190,13 +197,24 @@ struct  Render
                 }
 
                 ///------------------------------------|
+                /// MouseButtonPressed.                |
+                ///------------------------------------:
+                if(event->is<sf::Event::MouseButtonPressed>())
+                {   pImg->doMousePressed(convMouse2World(mouse_pos));
+                }
+
+                ///------------------------------------|
+                /// MouseButtonReleased.               |
+                ///------------------------------------:
+                if(event->is<sf::Event::MouseButtonReleased>())
+                {   pImg->doMouseReleased(mouse_pos);
+                }
+
+                ///------------------------------------|
                 /// Ресайзинг окна.                    |
                 ///------------------------------------:
                 if ([[maybe_unused]]const auto* resized
-                    = event->getIf<sf::Event::Resized>())
-                {
-                    updCamera(*pImg);
-                }
+                    = event->getIf<sf::Event::Resized>()){ updCamera(*pImg); }
             }
 
             ///----------------------|
@@ -218,10 +236,6 @@ struct  Render
 
             window.clear   ({0, 30, 60});
 
-            ///----------------------|
-            /// cam_world.           |
-            ///----------------------:
-            window.setView(camWorld);
             window.draw   (*pImg   );
 
             ///----------------------|
@@ -308,6 +322,22 @@ struct  Render
     {              pImg = &drawLoadImages;
         updCamera(*pImg);
         ui << uii::Clear{} << task384.info(*pImg);
+    }
+
+    ///------------------------------------|
+    /// Конверт coordMouse in coordWorld.  |
+    ///------------------------------------:
+    sf::Vector2f convMouse2World(const sf::Vector2i click)
+    {
+        const sf::Vector2f& W = camWorld.getSize();
+        const sf::Vector2u& M =   window.getSize();
+
+        const sf::Vector2f result
+        {   W.x * click.x / M.x - W.x / 2,
+            W.y * click.y / M.y - W.y / 2
+        };
+
+        return result;
     }
 
     void test_01()

@@ -16,10 +16,11 @@ namespace animate
             {   setColor();
             }
 
+        inline static sf::Color COLORCLICK{255, 128, 128};
+        inline static sf::Color COLORCLEAR{255, 255, 255};
 
         void setPosition(const sf::Vector2f mousepos)
-        {
-            for(auto& line : lines)
+        {   for(auto& line : lines)
             {         line.setPosition(mousepos);
             }
         }
@@ -37,35 +38,26 @@ namespace animate
 
     private:
         std::array<sf::RectangleShape, 4> lines;
+        float thickness{3};
 
         void init(const myl::Sprite* sp)
         {
             const sf::FloatRect& r = sp->getGlobalBounds();
 
-            lines[0].setSize({r.size.x, 3});
-            lines[1].setSize({r.size.x, 3});
-            lines[2].setSize({3, r.size.y});
-            lines[3].setSize({3, r.size.y});
+            const float& T = thickness;
 
-            for(auto& line : lines)
-            {         //line.setOrigin ({line.getSize().x / 2,
-                      //                 line.getSize().y / 2});
-            }
+            lines[0].setSize({r.size.x,     T});
+            lines[1].setSize({r.size.x,     T});
+            lines[2].setSize({T, r.size.y    });
+            lines[3].setSize({T, r.size.y + T});
 
             const float& x = r.position.x;
             const float& y = r.position.y;
 
-/// TODO::1
-/*
-            lines[0].setPosition({ x,  r.size.y / 2 + y});
-            lines[1].setPosition({ x, -r.size.y / 2 + y});
-            lines[2].setPosition({ r.size.x / 2 + x,  y});
-            lines[3].setPosition({-r.size.x / 2 + x,  y});
-*/
-            lines[0].setPosition({ x,  y});
-            lines[1].setPosition({ x,  y});
-            lines[2].setPosition({ x,  y});
-            lines[3].setPosition({ x,  y});
+            lines[0].setPosition({ x,             y           });
+            lines[1].setPosition({ x,             y + r.size.y});
+            lines[2].setPosition({ x           ,  y           });
+            lines[3].setPosition({ x + r.size.x,  y           });
         }
 
 
@@ -95,7 +87,6 @@ namespace animate
 
         }
 
-    private:
         myl::Sprite* psp{nullptr};
     };
 };

@@ -81,19 +81,36 @@ struct  DrawImage : sf::Drawable
 
     void mixer(float gap = 0.f)
     {
-        for(unsigned n = 0; n < spp.size(); ++n)
+        for(unsigned n = 0; n < psp.size(); ++n)
         {
-            unsigned a = unsigned(rand() % spp.size());
-            unsigned b = unsigned(rand() % spp.size());
+            unsigned a = unsigned(rand() % psp.size());
+            unsigned b = unsigned(rand() % psp.size());
 
-            if(a != b) std::swap(spp[a], spp[b]);
+            if(a != b) std::swap(psp[a], psp[b]);
         }
         arrangeSprites(gap);
     }
 
     void set2Start(float gap = 0.f)
-    {   for(unsigned i = 0; i < sp.size(); ++i) spp[i] = &sp[i];
+    {   for(unsigned i = 0; i < sp.size(); ++i) psp[i] = &sp[i];
         arrangeSprites(gap);
+    }
+
+    void doMousePressed(const sf::Vector2f& click)
+    {   if(const auto p  = searchSprite    (click);
+                      p != nullptr)
+        {
+            if(animSprite.psp != nullptr)
+            animSprite.psp->setColor(anm::AnimSprite::COLORCLEAR);
+                       p  ->setColor(anm::AnimSprite::COLORCLICK);
+
+            animSprite.psp = p;
+            animSprite.bind (p);
+        }
+    }
+
+    void doMouseReleased(const sf::Vector2i& click)
+    {
     }
 
 private:
@@ -103,7 +120,7 @@ private:
     std::vector<TaskImage>&    images;
     std::vector<sf::Texture> textures;
     std::vector<myl::Sprite>       sp;
-    std::vector<myl::Sprite*>     spp;
+    std::vector<myl::Sprite*>     psp;
 
     anm::AnimSprite        animSprite;
 
@@ -131,10 +148,15 @@ private:
         for    (unsigned y = 0; y < WH.y; ++y)
         {   for(unsigned x = 0; x < WH.x; ++x)
             {
-                spp[WH.x  * y + x]->setPosition({float(x) * SIDEx - sza.x,
+                psp[WH.x  * y + x]->setPosition({float(x) * SIDEx - sza.x,
                                                  float(y) * SIDEy - sza.y});
             }
         }
+
+        ///--------------------------------------|
+        /// Захват спрайта.                      |
+        ///--------------------------------------:
+        animSprite.bind(psp[0]);
     }
 
     void init()
@@ -147,25 +169,27 @@ private:
             const unsigned WxH = WH.y * WH.x;
 
             sp.reserve(WxH);
-            spp.resize(WxH);
+            psp.resize(WxH);
 
-            for(unsigned i = 0; i < spp.size(); ++i)
+            for(unsigned i = 0; i < psp.size(); ++i)
             {
                 sp.emplace_back(myl::Sprite(textures[i]));
                 sp.back().setOrigin ({(float)images.front().getSize().x / 2,
                                       (float)images.front().getSize().y / 2});
 
-                spp[i] = &sp.back();
+                psp[i] = &sp.back();
 
                 sp.back().id       = i;
                 sp.back().filename = images[i].filename;
             }
         }
+    }
 
-        ///--------------------------------------|
-        /// Захват спрайта.                     |
-        ///--------------------------------------:
-        animSprite.bind(spp[0]);
+    myl::Sprite* searchSprite(const sf::Vector2f& click) const
+    {   for(const auto p : psp)
+        {   if(p->getGlobalBounds().contains(click)) return p;
+        }
+        return nullptr;
     }
 
     ///--------------------------------------|
@@ -174,9 +198,8 @@ private:
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates  states) const
     {
-        for(const auto& psprite : spp) target.draw(*psprite);
-
-        target.draw(animSprite);
+        for(const auto& psprite : psp) target.draw(*psprite);
+        target.draw (animSprite);
     }
 
     ///--------------------------------------|

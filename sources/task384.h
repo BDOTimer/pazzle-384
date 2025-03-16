@@ -283,7 +283,7 @@ private:
     void init(const DrawImage& imgs)
     {   clear();
         reserve(imgs.images .size());
-        for(const auto& p : imgs.spp) push_back(&imgs.images[p->id]);
+        for(const auto& p : imgs.psp) push_back(&imgs.images[p->id]);
         sim.reserve(calcElem(size()));
 
         ASSERT(size() == imgs.images .size())
