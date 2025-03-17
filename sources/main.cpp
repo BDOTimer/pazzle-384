@@ -38,6 +38,8 @@ struct  Render
                  ,  drawLoadImages(images)
                  ,  task384       (images)
         {
+            myl::setIconMemory2Window(window);
+
             window.setFramerateLimit(60);
 
             camUI = window.getView();
@@ -361,6 +363,8 @@ void tests()
     /// tools::CutterImage       ::test();
     /// tools::ManegerCutterImage::test();
     }
+
+    myl::tests();
 
 /// myl ::testfoo_getVSizeWH();
 /// CastomFilesCargo  ::test();

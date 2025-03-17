@@ -91,6 +91,47 @@ namespace myl
         std::string_view filename;
         unsigned         id {unsigned(-1)};
     };
+
+    ///--------------------------------------|
+    /// Установка иконки на окно из файла.   |
+    ///--------------------------------------:
+    inline void setIconFile2Window(sf::RenderWindow&  window)
+    {   sf::Image      icon;
+        if (!icon.loadFromFile("img_287_32x32")){ return; }
+        window.setIcon(icon);
+    }
+
+    #include "res/img_287_32x32.h"
+    ///--------------------------------------|
+    /// Установка иконки на окно из памяти.  |
+    ///--------------------------------------:
+    inline void setIconMemory2Window(sf::RenderWindow&  window)
+    {   sf::Image      icon;
+        if (!icon.loadFromMemory(img_287_32x32, img_287_32x32_len)){ return; }
+        window.setIcon(icon);
+    }
+
+    ///--------------------------------------|
+    /// Установка иконки на окно.            |
+    ///--------------------------------------:
+    inline void testRC()
+    {
+        //l(_binary_resources_res_start)
+    }
+
+    ///--------------------------------------|
+    /// Тесты.                               |
+    ///--------------------------------------:
+    inline void tests()
+    {
+    return;
+
+        std::cout << "Start myl::tests() ...\n\n";
+
+        testRC();
+
+        std::cin.get();
+    }
 }
 
 #endif // MYL_H
