@@ -7,6 +7,7 @@
 #include "nano-test.h"
 #include "gen-img.h"
 #include "task384.h"
+#include "provide-res.h"
 
 
 ///---------------------------------|
@@ -375,12 +376,12 @@ void tests()
 /// DrawImage         ::test();
 /// Task384           ::test();
 /// NanoTest          ::test();
+    ProvideResources  ::test();
 
     ///---------------------------|
     /// Основной рендер.          |
     ///---------------------------:
-///
-std::unique_ptr<Render> run(new Render);
+/// std::unique_ptr<Render> run(new Render);
 }
 
 

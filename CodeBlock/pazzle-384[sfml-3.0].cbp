@@ -36,6 +36,7 @@
 					<Add library="libgdi32.a" />
 					<Add library="libwinmm.a" />
 					<Add library="libopengl32.a" />
+					<Add library="../bin/resEXE/libres.a" />
 					<Add directory="$(#sfml30)/lib" />
 				</Linker>
 			</Target>
@@ -49,6 +50,7 @@
 		<Linker>
 			<Add library="../extlib/imgui-sfml-3.0/64/libImGui-SFML.a" />
 		</Linker>
+		<Unit filename="../bin/resEXE/allResIndex.h" />
 		<Unit filename="../doc.txt" />
 		<Unit filename="../extlib/imgui-1.91.8/imconfig.h" />
 		<Unit filename="../extlib/imgui-1.91.8/imgui.cpp" />
@@ -74,6 +76,7 @@
 		<Unit filename="../sources/main.cpp" />
 		<Unit filename="../sources/myl.h" />
 		<Unit filename="../sources/nano-test.h" />
+		<Unit filename="../sources/provide-res.h" />
 		<Unit filename="../sources/task-img.h" />
 		<Unit filename="../sources/task384.h" />
 		<Unit filename="../sources/ui-imgui.h" />
