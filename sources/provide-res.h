@@ -39,7 +39,9 @@ struct  ResourcesFromFiles : IRes
 private:
 
 };
+    #define __CLASS__ std::remove_reference<decltype(classMacroImpl(this))>::type
 
+    template<class T> T& classMacroImpl(const T* t);
 
 ///----------------------------------------------------------------------------|
 /// ProvideResources
@@ -47,7 +49,6 @@ private:
 struct  ProvideResources
 {       ProvideResources()
         {
-
         }
 
 
@@ -56,7 +57,7 @@ private:
     IRes* pRes{nullptr};
 
     TEST
-    {   std::cout << "START ProvideResources::TEST():\n\n";
+    {   INFOSTART;
 
         sf::Image img;
 
@@ -67,7 +68,9 @@ private:
 
         p->get2LoadHere(img);
 
-        std::cout << "FINISHED ProvideResources::TEST():\n\n";
+        l(typeid(resFiles).name())
+
+        INFOEND;
     }
 };
 

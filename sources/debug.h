@@ -67,4 +67,17 @@ struct  Ass
 #define WARNING(a, mess) Ass::warn (a, __FILE__, __LINE__, mess);
 #define TRY(a) try{a;}catch(...){std::cout << "ERROR exeption: " << #a << '\n';}
 
+#define INFOSTART std::cout << "START "    << __METHOD_NAME__  << ":\n\n"
+#define INFOEND   std::cout << "FINISHED " << __METHOD_NAME__  << ":\n\n"
+
+inline std::string methodName(const std::string& prettyFunction)
+{
+    size_t colons = prettyFunction.find("::");
+    size_t begin = prettyFunction.substr(0,colons).rfind(" ") + 1;
+    size_t end = prettyFunction.rfind("(") - begin;
+    return prettyFunction.substr(begin,end) + "()";
+}
+
+#define __METHOD_NAME__ methodName(__PRETTY_FUNCTION__)
+
 #endif // DEBUG_H
