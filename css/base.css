@@ -1,0 +1,187 @@
+:root {
+  color-scheme: dark;
+  --black: #08090c;
+  --panel: #0d1119;
+  --panel-soft: #121a25;
+  --blue: #0084ff;
+  --cyan: #00d5df;
+  --green: #00c957;
+  --yellow: #ffe14a;
+  --red: #ff3b30;
+  --magenta: #ed2f91;
+  --white: #f4f4ed;
+  --gray: #7b8491;
+  --line: rgba(0, 213, 223, 0.3);
+  --shadow: 8px 8px 0 rgba(0, 0, 0, 0.45);
+  --pixel: "Courier New", "Lucida Console", monospace;
+  font-family: var(--pixel);
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--white);
+}
+
+body {
+  min-width: 320px;
+  user-select: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+[hidden],
+.is-hidden {
+  display: none !important;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--black);
+}
+
+#game-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#screen-root,
+#ui-root,
+#loading-root {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+#ui-root,
+#loading-root {
+  z-index: 20;
+  pointer-events: none;
+}
+
+#screen-root > section {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.crt-overlay,
+.crt-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.crt-overlay {
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0, rgba(0, 0, 0, 0.18) 1px, transparent 1px, transparent 4px),
+    linear-gradient(90deg, rgba(255, 49, 46, 0.018), rgba(0, 213, 223, 0.012));
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+}
+
+.crt-noise {
+  background-image: repeating-linear-gradient(117deg, transparent 0 3px, rgba(255, 255, 255, 0.018) 4px, transparent 5px 8px);
+  animation: crt-shift 0.16s steps(2) infinite;
+}
+
+noscript {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: var(--black);
+  color: var(--red);
+  font: 700 1rem var(--pixel);
+}
+
+::selection {
+  color: var(--black);
+  background: var(--cyan);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090c12;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #090c12;
+  background: var(--cyan);
+}
+
+:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+kbd {
+  display: inline-grid;
+  min-width: 1.8em;
+  min-height: 1.8em;
+  place-items: center;
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--cyan);
+  background: rgba(0, 132, 255, 0.1);
+  color: var(--cyan);
+  font: 700 0.72rem var(--pixel);
+  box-shadow: 2px 2px 0 rgba(0, 213, 223, 0.2);
+}
+
+@keyframes crt-shift {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(1px); }
+  100% { transform: translateY(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

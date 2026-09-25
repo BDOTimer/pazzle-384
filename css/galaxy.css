@@ -1,0 +1,241 @@
+.galaxy-screen {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background:
+    radial-gradient(circle at 35% 50%, rgba(0, 132, 255, 0.12), transparent 35%),
+    radial-gradient(circle at 75% 20%, rgba(237, 47, 145, 0.07), transparent 28%),
+    #05080d;
+}
+
+.galaxy-header,
+.galaxy-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  background: rgba(5, 9, 14, 0.9);
+}
+
+.galaxy-header__eyebrow {
+  color: var(--cyan);
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+}
+
+.galaxy-header h1 {
+  margin: 0.25rem 0 0;
+  color: var(--white);
+  font-size: clamp(1.1rem, 3vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.galaxy-header__actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.galaxy-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  min-height: 0;
+}
+
+.galaxy-map {
+  position: relative;
+  min-height: 0;
+  margin: clamp(0.75rem, 2vw, 1.5rem);
+  overflow: hidden;
+  border: 1px solid #263c49;
+  background:
+    radial-gradient(circle, rgba(0, 213, 223, 0.13) 0 1px, transparent 1.5px) 0 0 / 42px 42px,
+    linear-gradient(rgba(0, 132, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 213, 223, 0.03) 1px, transparent 1px),
+    #060b11;
+  background-size: 42px 42px, 84px 84px, 84px 84px, auto;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+}
+
+.galaxy-map::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(0, 213, 223, 0.1);
+  content: "";
+  pointer-events: none;
+}
+
+.galaxy-map svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.galaxy-route {
+  stroke: rgba(123, 132, 145, 0.34);
+  stroke-width: 0.22;
+  stroke-dasharray: 1 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.galaxy-route.is-active {
+  stroke: var(--yellow);
+  stroke-width: 0.45;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 2px var(--yellow));
+}
+
+.galaxy-node {
+  position: absolute;
+  z-index: 1;
+  min-width: 34px;
+  min-height: 24px;
+  padding: 0.25rem 0.35rem;
+  border: 1px solid #47606e;
+  border-radius: 0;
+  background: #080d13;
+  color: #8996a2;
+  font-size: clamp(0.48rem, 0.75vw, 0.62rem);
+  font-weight: 800;
+  transform: translate(-50%, -50%);
+}
+
+.galaxy-node::before {
+  position: absolute;
+  top: 50%;
+  left: -9px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.galaxy-node:hover,
+.galaxy-node:focus-visible,
+.galaxy-node.is-selected {
+  z-index: 2;
+  border-color: var(--white);
+  color: var(--white);
+  box-shadow: 0 0 14px rgba(244, 244, 237, 0.25);
+}
+
+.galaxy-node.is-current {
+  border-color: var(--yellow);
+  color: var(--yellow);
+  box-shadow: 0 0 14px rgba(255, 225, 74, 0.3);
+}
+
+.galaxy-node.is-current::before {
+  background: var(--yellow);
+}
+
+.galaxy-details {
+  min-height: 0;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  overflow: auto;
+  border-left: 1px solid var(--line);
+  background: rgba(7, 12, 18, 0.88);
+}
+
+.galaxy-details__code {
+  color: var(--yellow);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.galaxy-details__name {
+  margin: 0.5rem 0 1.2rem;
+  color: var(--white);
+  font-size: 0.8rem;
+}
+
+.galaxy-details__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.galaxy-details__tags span {
+  padding: 0.28rem 0.4rem;
+  border: 1px solid #2c404c;
+  color: var(--cyan);
+  font-size: 0.5rem;
+}
+
+.galaxy-details__stats {
+  display: grid;
+  gap: 1px;
+  margin: 1.5rem 0;
+  background: #24323b;
+}
+
+.galaxy-details__stats div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem;
+  background: #0a1017;
+}
+
+.galaxy-details__stats dt {
+  color: var(--gray);
+  font-size: 0.54rem;
+}
+
+.galaxy-details__stats dd {
+  margin: 0;
+  color: var(--white);
+  font-size: 0.6rem;
+}
+
+.galaxy-details__planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.galaxy-details__planets span {
+  padding: 0.3rem 0.4rem;
+  background: rgba(0, 132, 255, 0.08);
+  color: var(--gray);
+  font-size: 0.52rem;
+}
+
+.galaxy-footer {
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+  color: var(--gray);
+  font-size: 0.54rem;
+}
+
+.galaxy-launch {
+  min-width: 220px;
+}
+
+@media (max-width: 800px) {
+  .galaxy-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(300px, 1fr) minmax(220px, 0.7fr);
+  }
+
+  .galaxy-details {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .galaxy-footer span {
+    display: none;
+  }
+
+  .galaxy-launch {
+    width: 100%;
+  }
+}

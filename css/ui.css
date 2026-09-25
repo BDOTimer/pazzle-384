@@ -1,0 +1,321 @@
+.ui-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background:
+    linear-gradient(rgba(0, 132, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 213, 223, 0.04) 1px, transparent 1px),
+    #05070b;
+  background-size: 24px 24px;
+  color: var(--cyan);
+  text-align: center;
+}
+
+.ui-loader__mark {
+  display: grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  place-items: center;
+  border: 3px solid var(--cyan);
+  color: var(--yellow);
+  font-size: 1.25rem;
+  font-weight: 900;
+  transform: rotate(45deg);
+  box-shadow: 0 0 24px rgba(0, 213, 223, 0.3);
+}
+
+.ui-loader__mark::first-line {
+  transform: rotate(-45deg);
+}
+
+.ui-loader__title {
+  color: var(--white);
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  letter-spacing: 0.22em;
+}
+
+.ui-loader__track {
+  width: min(420px, 76vw);
+  height: 12px;
+  padding: 2px;
+  border: 1px solid var(--cyan);
+  background: #071017;
+}
+
+.ui-loader__bar {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--cyan) 0 8px, transparent 8px 10px);
+  transition: width 0.2s steps(5);
+}
+
+.ui-loader__status {
+  min-height: 1.2em;
+  color: var(--yellow);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.ui-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  align-content: center;
+  justify-items: stretch;
+  width: min(520px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  overflow: auto;
+  border: 2px solid var(--cyan);
+  background:
+    linear-gradient(135deg, rgba(0, 213, 223, 0.08), transparent 35%),
+    rgba(6, 10, 16, 0.97);
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.55), 0 0 40px rgba(0, 132, 255, 0.12);
+  pointer-events: auto;
+}
+
+.ui-modal::before,
+.ui-modal::after {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  content: "";
+}
+
+.ui-modal::before {
+  top: 7px;
+  left: 7px;
+  border-top: 3px solid var(--yellow);
+  border-left: 3px solid var(--yellow);
+}
+
+.ui-modal::after {
+  right: 7px;
+  bottom: 7px;
+  border-right: 3px solid var(--yellow);
+  border-bottom: 3px solid var(--yellow);
+}
+
+.ui-panel__eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--cyan);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+}
+
+.ui-panel__title {
+  margin: 0 0 1.5rem;
+  color: var(--white);
+  font-size: clamp(1.5rem, 5vw, 2.7rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.ui-button {
+  position: relative;
+  min-height: 2.7rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--cyan);
+  border-radius: 0;
+  background: rgba(0, 213, 223, 0.04);
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: color 0.12s, background 0.12s, transform 0.12s;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+}
+
+.ui-button:hover:not(:disabled),
+.ui-button:focus-visible {
+  background: var(--cyan);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+.ui-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ui-button:disabled {
+  border-color: #3c4650;
+  background: #11161c;
+  color: #56606a;
+  opacity: 0.72;
+}
+
+.ui-button--primary {
+  border-color: var(--yellow);
+  background: rgba(255, 225, 74, 0.12);
+  color: var(--yellow);
+}
+
+.ui-button--primary:hover:not(:disabled),
+.ui-button--primary:focus-visible {
+  background: var(--yellow);
+}
+
+.ui-button--danger {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.ui-button--danger:hover:not(:disabled),
+.ui-button--danger:focus-visible {
+  background: var(--red);
+  color: var(--white);
+}
+
+.ui-button--small {
+  min-height: 2rem;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.62rem;
+}
+
+.ui-input,
+.ui-select {
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #3a5b68;
+  border-radius: 0;
+  background: #080d13;
+  color: var(--white);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  user-select: text;
+}
+
+.ui-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--cyan) 50%), linear-gradient(135deg, var(--cyan) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 6px 6px;
+}
+
+.ui-range {
+  width: min(230px, 45vw);
+  accent-color: var(--cyan);
+}
+
+.ui-checkbox {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--cyan);
+}
+
+.ui-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin: 0 0 1.5rem;
+  background: #26323a;
+}
+
+.ui-stats div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.8rem;
+  background: #0b1017;
+}
+
+.ui-stats dt {
+  color: var(--gray);
+  font-size: 0.62rem;
+}
+
+.ui-stats strong {
+  color: var(--yellow);
+}
+
+.ui-meter {
+  height: 12px;
+  margin: 1.25rem 0;
+  padding: 2px;
+  border: 1px solid #31404a;
+  background: #070a0e;
+}
+
+.ui-meter__fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--cyan) 0 7px, var(--blue) 7px 9px);
+}
+
+.ui-settings {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid #24333c;
+}
+
+.ui-settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--gray);
+  font-size: 0.68rem;
+}
+
+.ui-pause__actions,
+.ui-gameover__actions {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.ui-gameover__text {
+  margin: -0.6rem 0 1.4rem;
+  color: var(--gray);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.ui-commander__rank {
+  margin: 0 0 1.2rem;
+  color: var(--yellow);
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+}
+
+.ui-commander__license,
+.ui-commander__vessel {
+  color: var(--gray);
+  font-size: 0.7rem;
+  line-height: 1.7;
+}
+
+.ui-commander__points {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  color: var(--gray);
+  font-size: 0.65rem;
+}
+
+.ui-commander__points span:last-child {
+  color: var(--cyan);
+}
+
+@media (max-width: 560px) {
+  .ui-modal {
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+    padding: 1.25rem;
+  }
+}
